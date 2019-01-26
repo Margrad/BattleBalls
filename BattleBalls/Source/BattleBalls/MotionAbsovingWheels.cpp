@@ -9,11 +9,8 @@ AMotionAbsovingWheels::AMotionAbsovingWheels()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.TickGroup = TG_PostPhysics;
-	if (PrimaryActorTick.TickGroup = TG_PostPhysics) {
 
-	}
 
 	Wheel = CreateDefaultSubobject<USphereComponent>(FName("Wheel"));
 	ShockAbsorber = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("Physics Constraint"));

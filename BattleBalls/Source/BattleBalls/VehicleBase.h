@@ -26,14 +26,7 @@ protected:
 	virtual void BeginPlay() override;
 
 private:	
-	UPROPERTY(EditDefaultsOnly,Category = Setup)
-	class UStaticMeshComponent* Body;
 
-	UPROPERTY(EditDefaultsOnly, Category = Setup)
-	class UWeaponComponent* WeaponComponent;
-
-	UPROPERTY(EditDefaultsOnly, Category = Setup)
-	class UVehicleComponent* VehicleComponent;
 
 	
 };
