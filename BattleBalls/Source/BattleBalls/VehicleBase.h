@@ -20,6 +20,16 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	
+	//Funtion to setupe the Sidewheels properly
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetWheels(class USideWheels* LeftWheels, class USideWheels* RightWheels);
+
+	UFUNCTION(BlueprintCallable, Category = Movement)
+		void IntendMoveForward(float ThrottleMultiplier);
+
+	UFUNCTION(BlueprintCallable, Category = Movement)
+		void IndendMoveRigth(float ThrottleMultiplier);
 
 protected:
 	// Called when the game starts or when spawned
@@ -27,6 +37,10 @@ protected:
 
 private:	
 
+	// Recive input and send it to the wheel
+	// Recive input
 
+	class USideWheels* LeftWheels = nullptr;
+	class USideWheels* RightWheels = nullptr;
 	
 };

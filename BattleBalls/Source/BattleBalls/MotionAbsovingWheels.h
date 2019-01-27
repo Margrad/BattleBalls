@@ -23,14 +23,16 @@ public:
 	void IsToucnhingGround(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 
 	//Recieves the input for a wheel from 0 to 1;
-	void AddDrivingMultiplier(float ForceMagnitude) { TotalThrottleMultiplier += ForceMagnitude; };
+	UFUNCTION(BlueprintCallable)
+	void AddDrivingMultiplier(float ForceMagnitude);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 private:
 	UPROPERTY(EditDefaultsOnly)
-	float BaseWheelThrottle = 1000;
+	float BaseWheelThrottle = 1000000;
 
 	UPROPERTY(EditDefaultsOnly)
 	float TotalThrottleMultiplier = 0;

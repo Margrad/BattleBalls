@@ -34,22 +34,35 @@ void AMotionAbsovingWheels::BeginPlay()
 	if (!GetAttachParentActor()) { return; }
 	UPrimitiveComponent* BodyRoot = Cast<UPrimitiveComponent>(GetAttachParentActor()->GetRootComponent());
 	if (!BodyRoot) { return; }
-	ShockAbsorber->SetConstrainedComponents(BodyRoot, NAME_None, Axel, NAME_None);
 	WheelRotationAllower->SetConstrainedComponents(Axel, NAME_None, Wheel, NAME_None);
+	ShockAbsorber->SetConstrainedComponents(BodyRoot, NAME_None, Axel, NAME_None);
 	
 }
 
 // Called every frame
 void AMotionAbsovingWheels::Tick(float DeltaTime)
 {
+	//UE_LOG(LogTemp, Warning, TEXT("Ground is touched: Throttle : %f"), TotalThrottleMultiplier);
 	Super::Tick(DeltaTime);
 	if (GetWorld()->TickGroup == TG_PostPhysics) {
 		TotalThrottleMultiplier = 0;
 	}
+	//UE_LOG(LogTemp, Warning, TEXT("Ground is touched: Throttle : %f"), TotalThrottleMultiplier);
 }
 
 void AMotionAbsovingWheels::IsToucnhingGround(UPrimitiveComponent * HitComponent, AActor * OtherActor, UPrimitiveComponent * OtherComponent, FVector NormalImpulse, const FHitResult & Hit)
 {
+	//UE_LOG(LogTemp, Warning, TEXT("Ground is touched: Throttle : %f"), TotalThrottleMultiplier);
+	TotalThrottleMultiplier = FMath::Clamp<float>(TotalThrottleMultiplier, -1, 1);
 	Wheel->AddForce(Axel->GetForwardVector()*TotalThrottleMultiplier*BaseWheelThrottle);
+}
+
+void AMotionAbsovingWheels::AddDrivingMultiplier(float ForceMagnitude)
+{
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Wheels: Ground is touched: Throttle : %f"), ForceMagnitude);
+		TotalThrottleMultiplier += ForceMagnitude;
+		UE_LOG(LogTemp, Warning, TEXT("Wheels: Ground is touched: TotalThrottle : %f"), TotalThrottleMultiplier);
+	}
 }
 

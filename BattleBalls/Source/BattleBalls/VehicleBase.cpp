@@ -3,6 +3,7 @@
 #include "VehicleBase.h"
 #include "WeaponComponent.h"
 #include "VehicleComponent.h"
+#include "SideWheels.h"
 
 // Sets default values
 AVehicleBase::AVehicleBase()
@@ -19,6 +20,22 @@ void AVehicleBase::BeginPlay()
 	
 }
 
+void AVehicleBase::IntendMoveForward(float ThrottleMultiplier)
+{
+
+	//UE_LOG(LogTemp, Warning, TEXT("Throttle : %f"), ThrottleMultiplier);
+	
+	RightWheels->DriveWheels(ThrottleMultiplier);
+	LeftWheels->DriveWheels(ThrottleMultiplier);
+}
+
+void AVehicleBase::IndendMoveRigth(float ThrottleMultiplier)
+{
+	//UE_LOG(LogTemp, Warning, TEXT("Throttle : %f"), ThrottleMultiplier);
+	RightWheels->DriveWheels(-ThrottleMultiplier);
+	LeftWheels->DriveWheels(ThrottleMultiplier);
+}
+
 // Called every frame
 void AVehicleBase::Tick(float DeltaTime)
 {
@@ -31,5 +48,11 @@ void AVehicleBase::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void AVehicleBase::SetWheels(USideWheels * LeftWheelsToSet, USideWheels * RightWheelsToSet)
+{
+	RightWheels = RightWheelsToSet;
+	LeftWheels = LeftWheelsToSet;
 }
 
