@@ -60,9 +60,9 @@ void AMotionAbsovingWheels::IsToucnhingGround(UPrimitiveComponent * HitComponent
 void AMotionAbsovingWheels::AddDrivingMultiplier(float ForceMagnitude)
 {
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Wheels: Ground is touched: Throttle : %f"), ForceMagnitude);
+		//UE_LOG(LogTemp, Warning, TEXT("Wheels: Ground is touched: Throttle : %f"), ForceMagnitude);
 		TotalThrottleMultiplier += ForceMagnitude;
-		UE_LOG(LogTemp, Warning, TEXT("Wheels: Ground is touched: TotalThrottle : %f"), TotalThrottleMultiplier);
+		//UE_LOG(LogTemp, Warning, TEXT("Wheels: Ground is touched: TotalThrottle : %f"), TotalThrottleMultiplier);
 	}
 }
 

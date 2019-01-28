@@ -32,7 +32,7 @@ protected:
 
 private:
 	UPROPERTY(EditDefaultsOnly)
-	float BaseWheelThrottle = 1000000;
+	float BaseWheelThrottle = 150000;
 
 	UPROPERTY(EditDefaultsOnly)
 	float TotalThrottleMultiplier = 0;
