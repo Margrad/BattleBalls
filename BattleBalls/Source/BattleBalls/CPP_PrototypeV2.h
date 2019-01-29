@@ -10,6 +10,9 @@
 class UPhysicsConstraintComponent;
 class USphereComponent;
 class UStaticMeshComponent;
+class USpringArmComponent;
+class USceneComponent;
+class UCameraComponent;
 
 UCLASS()
 class BATTLEBALLS_API ACPP_PrototypeV2 : public APawn
@@ -25,6 +28,20 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	UFUNCTION(BlueprintCallable, Category = Movement)
+	void IntedMoveForward(float Throttle);
+
+	UFUNCTION(BlueprintCallable, Category = Movement)
+	void IntedMoveRight(float Throttle);
+
+	// Camera Settings
+	UPROPERTY(EditDefaultsOnly, Category = Movement)
+	USpringArmComponent* SpringArm = nullptr;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Movement)
+	USceneComponent* Gizmoball = nullptr;
+	UPROPERTY(EditDefaultsOnly, Category = Movement)
+	UCameraComponent* Camera = nullptr;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -33,32 +50,45 @@ private:
 	// Pointers to the needed vehicle component F=Front, B=Back, L=Left, R=Right
 	UPROPERTY(VisibleAnywhere, Category = Components)
 	UStaticMeshComponent* Body;
-	//UPhysicsConstraintComponent* FLAbsorber;
-	//USphereComponent* FLAxel;
+	UPROPERTY(VisibleAnywhere, Category = Components)
+	UStaticMeshComponent* FLMask;
+	UPROPERTY(VisibleAnywhere, Category = Components)
+	UStaticMeshComponent* FRMask;
+	UPROPERTY(VisibleAnywhere, Category = Components)
+	UStaticMeshComponent* BLMask;
+	UPROPERTY(VisibleAnywhere, Category = Components)
+	UStaticMeshComponent* BRMask;
 	UPROPERTY(VisibleAnywhere, Category = Components)
 	UPhysicsConstraintComponent* FLAxelConstrain;
 	UPROPERTY(VisibleAnywhere, Category = Components)
 	USphereComponent* FLWheel;
-	//UPhysicsConstraintComponent* BLAbsorber;
-	//USphereComponent* BLAxel;
 	UPROPERTY(VisibleAnywhere, Category = Components)
 	UPhysicsConstraintComponent* BLAxelConstrain;
 	UPROPERTY(VisibleAnywhere, Category = Components)
 	USphereComponent* BLWheel;
-	//UPhysicsConstraintComponent* FRAbsorber;
-	//USphereComponent* FRAxel;
 	UPROPERTY(VisibleAnywhere, Category = Components)
 	UPhysicsConstraintComponent* FRAxelConstrain; 
 	UPROPERTY(VisibleAnywhere, Category = Components)
 	USphereComponent* FRWheel;
-	//UPhysicsConstraintComponent* BRAbsorber;
-	//USphereComponent* BRAxel;
 	UPROPERTY(VisibleAnywhere, Category = Components)
 	UPhysicsConstraintComponent* BRAxelConstrain;
 	UPROPERTY(VisibleAnywhere, Category = Components)
 	USphereComponent* BRWheel;
 
+
+
+	void SetCamera();
+
+	// Movement Settings 
+	UPROPERTY(EditDefaultsOnly, Category = Movement)
+	float BaseThrottle = 150000;
+	UPROPERTY(EditDefaultsOnly, Category = Movement)
+	float MaxSpeed = 770;
+	UPROPERTY(EditDefaultsOnly, Category = Movement)
+	float MaxRotation = 120;
+
 	void SetAxelConstrains(UPhysicsConstraintComponent* AxelConstrain);
+	void SetWheels(USphereComponent* Wheel);
 
 	void InitializeComponents();
 	void AttachComponents();
