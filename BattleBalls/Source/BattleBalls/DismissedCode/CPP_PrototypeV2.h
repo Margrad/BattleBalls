@@ -58,6 +58,7 @@ private:
 	UStaticMeshComponent* BLMask;
 	UPROPERTY(VisibleAnywhere, Category = Components)
 	UStaticMeshComponent* BRMask;
+
 	UPROPERTY(VisibleAnywhere, Category = Components)
 	UPhysicsConstraintComponent* FLAxelConstrain;
 	UPROPERTY(VisibleAnywhere, Category = Components)
@@ -67,13 +68,30 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = Components)
 	USphereComponent* BLWheel;
 	UPROPERTY(VisibleAnywhere, Category = Components)
-	UPhysicsConstraintComponent* FRAxelConstrain; 
+	UPhysicsConstraintComponent* FRAxelConstrain;
 	UPROPERTY(VisibleAnywhere, Category = Components)
 	USphereComponent* FRWheel;
 	UPROPERTY(VisibleAnywhere, Category = Components)
 	UPhysicsConstraintComponent* BRAxelConstrain;
 	UPROPERTY(VisibleAnywhere, Category = Components)
 	USphereComponent* BRWheel;
+	
+	UPROPERTY(VisibleAnywhere, Category = Components)
+	UPhysicsConstraintComponent* FLAbsorver;
+	UPROPERTY(VisibleAnywhere, Category = Components)
+	USphereComponent* FLAxle;
+	UPROPERTY(VisibleAnywhere, Category = Components)
+	UPhysicsConstraintComponent* BLAbsorver;
+	UPROPERTY(VisibleAnywhere, Category = Components)
+	USphereComponent* BLAxle;
+	UPROPERTY(VisibleAnywhere, Category = Components)
+	UPhysicsConstraintComponent* FRAbsorver;
+	UPROPERTY(VisibleAnywhere, Category = Components)
+	USphereComponent* FRAxle;
+	UPROPERTY(VisibleAnywhere, Category = Components)
+	UPhysicsConstraintComponent* BRAbsorver;
+	UPROPERTY(VisibleAnywhere, Category = Components)
+	USphereComponent* BRAxle;
 
 
 
@@ -89,7 +107,7 @@ private:
 
 	void SetAxelConstrains(UPhysicsConstraintComponent* AxelConstrain);
 	void SetWheels(USphereComponent* Wheel);
-
+	void SetAbsorvers(UPhysicsConstraintComponent* Absorver);
 	void InitializeComponents();
 	void AttachComponents();
 };
