@@ -1,6 +1,8 @@
 // All Copyrights reserved to Marco Granada.
 
 #include "WeaponComponent.h"
+#include "Engine/World.h"
+#include "Components/StaticMeshComponent.h"
 
 // Sets default values for this component's properties
 UWeaponComponent::UWeaponComponent()
@@ -29,5 +31,18 @@ void UWeaponComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+}
+
+void UWeaponComponent::InitializeComponent(USceneComponent* BarrelToSet, UStaticMeshComponent* BarrelMeshToSet)
+{
+	Barrel = BarrelToSet;
+	BarrelMesh = BarrelMeshToSet;
+}
+
+void UWeaponComponent::Fire()
+{
+	auto Location = BarrelMesh->GetSocketLocation(FName("FireMouth"));
+	auto Rotation = BarrelMesh->GetSocketRotation(FName("FireMouth"));
+	AActor* Projectile = GetWorld()->SpawnActor<AActor>(ProjectileBP,Location,Rotation);
 }
 
