@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// All Copyrights reserved to Marco Granada.
 
 #pragma once
 
