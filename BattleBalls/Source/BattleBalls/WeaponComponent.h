@@ -19,7 +19,16 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable, Category = Fire)
-	void InitializeComponent(USceneComponent* Barrel, UStaticMeshComponent* BarrelMesh);
+	void InitializeComponent(USceneComponent* BarrelBase, USceneComponent* Barrel, UStaticMeshComponent* BarrelMesh);
+
+	// This function will move the Barrel in the camera direction
+	UFUNCTION(BlueprintCallable, Category = Fire)
+	void MoveBarrel(FVector PointToAim);
+
+	// This function will calculate the barrel position to hit a target
+	UFUNCTION(BlueprintCallable, Category = Fire)
+	void AIAimAt(FVector Target);
+
 
 	UFUNCTION(BlueprintCallable, Category = Fire)
 	void Fire();
@@ -29,7 +38,15 @@ protected:
 
 private:
 	USceneComponent* Barrel;
+	USceneComponent* BarrelBase;
 	UStaticMeshComponent* BarrelMesh;
 	UPROPERTY(EditDefaultsOnly, Category = Fire)
 	TSubclassOf<AActor> ProjectileBP;
+
+	UPROPERTY(EditDefaultsOnly, Category = Fire)
+	float MaxElevationSpeed = 25;
+
+	UPROPERTY(EditDefaultsOnly, Category = Fire)
+	float MaxRotationSpeed = 25;
+
 };

@@ -33,11 +33,43 @@ void UWeaponComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	// ...
 }
 
-void UWeaponComponent::InitializeComponent(USceneComponent* BarrelToSet, UStaticMeshComponent* BarrelMeshToSet)
+void UWeaponComponent::InitializeComponent(USceneComponent* BarrelBaseToSet, USceneComponent* BarrelToSet, UStaticMeshComponent* BarrelMeshToSet)
 {
 	Barrel = BarrelToSet;
 	BarrelMesh = BarrelMeshToSet;
+	BarrelBase = BarrelBaseToSet;
 }
+
+void UWeaponComponent::MoveBarrel(FVector PointToAim)
+{
+	if (!ensure(Barrel)) { return; }
+	if (!ensure(BarrelBase)) { return; }
+	if (!ensure(BarrelMesh)) { return; }
+
+	// Get Move difference
+	FRotator CurrentAim = BarrelMesh->GetForwardVector().Rotation();
+	FRotator DestineAim = PointToAim.Rotation();
+	FRotator DifRotation = DestineAim - CurrentAim;
+
+	// Elevate Barrel
+	float DifPitch = FMath::Clamp<float>(DifRotation.Pitch,-1,1);
+	float DeltaT = GetWorld()->DeltaTimeSeconds;
+	float DifElevation =  DifPitch* MaxElevationSpeed * DeltaT;
+	float RawNewElevation = DifPitch + DifElevation;
+	RawNewElevation = FMath::Clamp<float>(RawNewElevation, -15, 45);
+	Barrel->SetRelativeRotation(FRotator(RawNewElevation, 0, 0));
+
+	// Rotate Barrel
+	float DifYaw = FMath::Clamp<float>(DifRotation.Yaw, -1, 1);
+	float DifRot = DifYaw * MaxRotationSpeed * DeltaT;
+	float RawNewRotation = DifYaw + DifRot;
+	BarrelBase->SetRelativeRotation(FRotator(0, RawNewRotation, 0));
+}
+
+void UWeaponComponent::AIAimAt(FVector Target)
+{
+}
+
 
 void UWeaponComponent::Fire()
 {
