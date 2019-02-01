@@ -51,16 +51,13 @@ void UWeaponComponent::MoveBarrel(FVector PointToAim)
 	FRotator DestineAim = PointToAim.GetSafeNormal().Rotation();
 	FRotator DifRotation = DestineAim - CurrentAim;
 	
-	// Test Stuff
-	//	UE_LOG(LogTemp, Warning, TEXT("Cur: %s Dest: %s  Dif: %s"), *CurrentAim.ToString(), *DestineAim.ToString(), *DifRotation.ToString());
-
 	// Elevate Barrel
 	float DifPitch = FMath::Clamp<float>(DifRotation.Pitch,-1,1);
 	//float DifPitch = DifRotation.Pitch;
 	float DeltaT = GetWorld()->DeltaTimeSeconds;
 	float DifElevation =  DifPitch* MaxElevationSpeed * DeltaT;
 	float RawNewElevation = DifPitch + Barrel->RelativeRotation.Pitch;
-	RawNewElevation = FMath::Clamp<float>(RawNewElevation, -10, 45);
+	RawNewElevation = FMath::Clamp<float>(RawNewElevation, -10, 75);
 	Barrel->SetRelativeRotation(FRotator(RawNewElevation, 0, 0));
 
 	// Rotate Barrel
@@ -106,11 +103,21 @@ void UWeaponComponent::AutoAimAt(FVector Target)
 	}
 }
 
+void UWeaponComponent::AutoAimAtActor(AActor * Target)
+{
+	FVector AimAtLocation = Target->GetActorLocation();
+	AutoAimAt(AimAtLocation);
+}
+
 
 void UWeaponComponent::Fire()
 {
-	auto Location = BarrelMesh->GetSocketLocation(FName("FireMouth"));
-	auto Rotation = BarrelMesh->GetSocketRotation(FName("FireMouth"));
-	AActor* Projectile = GetWorld()->SpawnActor<AActor>(ProjectileBP,Location,Rotation);
+	if(LastShotTime <= GetWorld()->TimeSeconds+ReloadTime)
+	{
+		auto Location = BarrelMesh->GetSocketLocation(FName("FireMouth"));
+		auto Rotation = BarrelMesh->GetSocketRotation(FName("FireMouth"));
+		AActor* Projectile = GetWorld()->SpawnActor<AActor>(ProjectileBP, Location, Rotation);
+		LastShotTime = GetWorld()->TimeSeconds;
+	}
 }
 

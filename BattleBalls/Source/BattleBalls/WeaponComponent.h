@@ -25,9 +25,13 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Fire)
 	void MoveBarrel(FVector PointToAim);
 
-	// This function will calculate the barrel position to hit a target
+	// This function will calculate the barrel position to hit a target Position
 	UFUNCTION(BlueprintCallable, Category = Fire)
-	void AutoAimAt(FVector Target);
+	void AutoAimAt(FVector Target);	
+	
+	// This function will calculate the barrel position to hit a target AActor
+	UFUNCTION(BlueprintCallable, Category = Fire)
+	void AutoAimAtActor(AActor* Target);
 
 	// Get BarrelMesh position to use in PlayerController->CrossAimAt
 	UStaticMeshComponent* GetBarrel() { return BarrelMesh; }
@@ -45,6 +49,11 @@ private:
 	UStaticMeshComponent* BarrelMesh;
 	UPROPERTY(EditDefaultsOnly, Category = Fire)
 	TSubclassOf<AActor> ProjectileBP;
+	   
+
+	UPROPERTY(EditDefaultsOnly, Category = Fire)
+	float ReloadTime = 0.2;
+	float LastShotTime = 0;
 
 	UPROPERTY(EditDefaultsOnly, Category = Fire)
 	float MaxElevationSpeed = 25;
