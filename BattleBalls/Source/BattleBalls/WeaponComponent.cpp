@@ -112,12 +112,12 @@ void UWeaponComponent::AutoAimAtActor(AActor * Target)
 
 void UWeaponComponent::Fire()
 {
-	if(LastShotTime <= GetWorld()->TimeSeconds+ReloadTime)
+	if(GetWorld()->TimeSeconds >= NextShotTime )
 	{
 		auto Location = BarrelMesh->GetSocketLocation(FName("FireMouth"));
 		auto Rotation = BarrelMesh->GetSocketRotation(FName("FireMouth"));
 		AActor* Projectile = GetWorld()->SpawnActor<AActor>(ProjectileBP, Location, Rotation);
-		LastShotTime = GetWorld()->TimeSeconds;
+		NextShotTime = GetWorld()->TimeSeconds + ReloadTime;
 	}
 }
 

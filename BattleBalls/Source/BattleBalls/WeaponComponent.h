@@ -53,12 +53,12 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = Fire)
 	float ReloadTime = 0.2;
-	float LastShotTime = 0;
+	float NextShotTime = 0;
 
 	UPROPERTY(EditDefaultsOnly, Category = Fire)
 	float MaxElevationSpeed = 25;
 
 	UPROPERTY(EditDefaultsOnly, Category = Fire)
-	float MaxRotationSpeed = 25;
+	float MaxRotationSpeed = 35;
 
 };
