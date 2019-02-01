@@ -3,7 +3,7 @@
 #include "WeaponComponent.h"
 #include "Engine/World.h"
 #include "Components/StaticMeshComponent.h"
-
+#include "Kismet/GameplayStatics.h"
 // Sets default values for this component's properties
 UWeaponComponent::UWeaponComponent()
 {
@@ -47,27 +47,63 @@ void UWeaponComponent::MoveBarrel(FVector PointToAim)
 	if (!ensure(BarrelMesh)) { return; }
 
 	// Get Move difference
-	FRotator CurrentAim = BarrelMesh->GetForwardVector().Rotation();
-	FRotator DestineAim = PointToAim.Rotation();
+	FRotator CurrentAim = Barrel->GetForwardVector().Rotation();
+	FRotator DestineAim = PointToAim.GetSafeNormal().Rotation();
 	FRotator DifRotation = DestineAim - CurrentAim;
+	
+	// Test Stuff
+	//	UE_LOG(LogTemp, Warning, TEXT("Cur: %s Dest: %s  Dif: %s"), *CurrentAim.ToString(), *DestineAim.ToString(), *DifRotation.ToString());
 
 	// Elevate Barrel
 	float DifPitch = FMath::Clamp<float>(DifRotation.Pitch,-1,1);
+	//float DifPitch = DifRotation.Pitch;
 	float DeltaT = GetWorld()->DeltaTimeSeconds;
 	float DifElevation =  DifPitch* MaxElevationSpeed * DeltaT;
-	float RawNewElevation = DifPitch + DifElevation;
-	RawNewElevation = FMath::Clamp<float>(RawNewElevation, -15, 45);
+	float RawNewElevation = DifPitch + Barrel->RelativeRotation.Pitch;
+	RawNewElevation = FMath::Clamp<float>(RawNewElevation, -10, 45);
 	Barrel->SetRelativeRotation(FRotator(RawNewElevation, 0, 0));
 
 	// Rotate Barrel
-	float DifYaw = FMath::Clamp<float>(DifRotation.Yaw, -1, 1);
+	if (FMath::Abs(DifRotation.Yaw) < 180) {
+		DifRotation.Yaw *= -1;
+	}
+	float DifYaw = FMath::Clamp<float>(-DifRotation.Yaw, -1, 1);
+	//float DifYaw = DifRotation.Yaw;
 	float DifRot = DifYaw * MaxRotationSpeed * DeltaT;
-	float RawNewRotation = DifYaw + DifRot;
+	float RawNewRotation = BarrelBase->RelativeRotation.Yaw + DifRot;
 	BarrelBase->SetRelativeRotation(FRotator(0, RawNewRotation, 0));
 }
 
-void UWeaponComponent::AIAimAt(FVector Target)
+void UWeaponComponent::AutoAimAt(FVector Target)
 {
+	if (!ensure(Barrel)) {
+		return;
+	}
+
+	auto BarrelLocation = Barrel->GetSocketLocation(FName("FireMouth"));
+	FVector OUTSugestedVelocity;
+	FCollisionResponseParams CollisionResponseParems = FCollisionResponseParams();
+	TArray<AActor*> IgnoredActores;
+	IgnoredActores.Add(GetOwner());
+	bool TrajectoryFound = UGameplayStatics::SuggestProjectileVelocity(
+		this,
+		OUT OUTSugestedVelocity,
+		BarrelLocation,
+		Target,
+		10000,
+		false,
+		0,
+		0,
+		ESuggestProjVelocityTraceOption::DoNotTrace,
+		CollisionResponseParems,
+		IgnoredActores,
+		false
+	);
+	if (TrajectoryFound)
+	{
+		auto AimDirection = OUTSugestedVelocity.GetSafeNormal();
+		MoveBarrel(AimDirection);
+	}
 }
 
 

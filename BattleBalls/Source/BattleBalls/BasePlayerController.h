@@ -13,5 +13,15 @@ UCLASS()
 class BATTLEBALLS_API ABasePlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
+public:
+	UFUNCTION(BlueprintCallable, Category = Fire)
+	FVector CrossAimingAt();
+
+	virtual void Tick(float) override;
+
+private:
+	// Ratio of the screen pointed by the crosshair from the top
+	// (0 is on the very top and 1 is ate the bottom)
+	UPROPERTY(EditDefaultsOnly, Category = Fire)
+	float Yratio = 0.45; 
 };

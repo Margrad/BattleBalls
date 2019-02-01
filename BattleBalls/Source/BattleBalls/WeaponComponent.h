@@ -27,7 +27,10 @@ public:
 
 	// This function will calculate the barrel position to hit a target
 	UFUNCTION(BlueprintCallable, Category = Fire)
-	void AIAimAt(FVector Target);
+	void AutoAimAt(FVector Target);
+
+	// Get BarrelMesh position to use in PlayerController->CrossAimAt
+	UStaticMeshComponent* GetBarrel() { return BarrelMesh; }
 
 
 	UFUNCTION(BlueprintCallable, Category = Fire)
