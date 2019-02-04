@@ -61,8 +61,9 @@ void UVehicleNavMovementComponent::GetBackUpSide()
 	UE_LOG(LogTemp, Warning, TEXT("%s || %s"), *CurrentRotation.ToString(), *Position.ToString());
 	*/
 	if (FMath::Abs(CurrentRotation.Roll) > 120 ) {
-		GetOwner()->SetActorLocation(Position, false, nullptr, ETeleportType::ResetPhysics);
-		GetOwner()->SetActorRotation(FRotator(CurrentRotation.Pitch, CurrentRotation.Yaw, 0), ETeleportType::ResetPhysics);
+		GetOwner()->SetActorLocation(Position, true, nullptr, ETeleportType::ResetPhysics);
+		// GetOwner()->SetActorRotation(FRotator(CurrentRotation.Pitch, CurrentRotation.Yaw, 0), ETeleportType::None);
+		GetOwner()->SetActorRotation(FRotator(0, 0, 0), ETeleportType::None);
 	}
 
 }

@@ -156,7 +156,7 @@ void AVehicleBase::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	// Reduce angular momento to stabilize flipping
 	FVector NewAngularSpeed = Body->GetPhysicsAngularVelocity();
-	NewAngularSpeed.Y *= 0.1;
+	NewAngularSpeed.Y *= DeltaTime;
 	Body->SetPhysicsAngularVelocity(NewAngularSpeed);
 
 }
