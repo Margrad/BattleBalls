@@ -21,10 +21,13 @@ public:
 	
 	// Tells the vehicle to move foward(Throttle > 0) or back (Throttle <0)
 	UFUNCTION(BlueprintCallable, Category = Movemente)
-	void IntedMoveForward(float Throttle);
+	void IntendMoveForward(float Throttle);
 	// Tells the vehicle to move Right(Throttle > 0) or Left (Throttle <0)
 	UFUNCTION(BlueprintCallable, Category = Movemente)
-	void IntedTurnRight(float Throttle);
+	void IntendTurnRight(float Throttle);
+	// Gets the vehicle back upside
+	UFUNCTION(BlueprintCallable, Category = Movemente)
+	void GetBackUpSide();
 	// Sets the component pointers to the needed vehicle wheels F=Front, B=Back, L=Left, R=Right
 	UFUNCTION(BlueprintCallable, Category = Movemente)
 	void InitializeVariable(UStaticMeshComponent* Bdy, USphereComponent* FL, USphereComponent* FR, USphereComponent* BL, USphereComponent* BR);

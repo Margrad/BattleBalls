@@ -5,5 +5,5 @@ This is a pet project of a game made with Unreal Engine and C++. The objective o
 
 Current Point in the development cycle:
 -> Add Function 
--> Make it work <-
--> Clean Code 
+-> Make it work 
+-> Clean Code <-

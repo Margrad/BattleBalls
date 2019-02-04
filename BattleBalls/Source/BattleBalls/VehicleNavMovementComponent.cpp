@@ -10,14 +10,14 @@ void UVehicleNavMovementComponent::RequestDirectMove(const FVector & MoveVelocit
 	FVector DirectionFacing = GetOwner()->GetActorForwardVector().GetSafeNormal();
 
 	float Throttle = FVector::DotProduct(DirectionToGo, DirectionFacing);
-	IntedMoveForward(Throttle);
+	IntendMoveForward(Throttle);
 
 	Throttle = FVector::CrossProduct(DirectionFacing, DirectionToGo).Z;
-	IntedTurnRight(Throttle);
+	IntendTurnRight(Throttle);
 }
 
 
-void UVehicleNavMovementComponent::IntedMoveForward(float ThrottleIn)
+void UVehicleNavMovementComponent::IntendMoveForward(float ThrottleIn)
 {
 
 	float Throttle = FMath::Clamp<float>(ThrottleIn, -1, 1);
@@ -25,14 +25,14 @@ void UVehicleNavMovementComponent::IntedMoveForward(float ThrottleIn)
 	CurrentSpeed = GetOwner()->GetVelocity().Size();
 	float ratio = CurrentSpeed / MaxSpeed;
 	ratio = FMath::Clamp<float>(ratio, 0, 1);
-	Throttle = Throttle*(1 - ratio);
+	Throttle = Throttle * (1 - ratio);
 	FLWheel->AddForce(Body->GetForwardVector()*Throttle*BaseThrottle);
 	FRWheel->AddForce(Body->GetForwardVector()*Throttle*BaseThrottle);
 	BLWheel->AddForce(Body->GetForwardVector()*Throttle*BaseThrottle);
 	BRWheel->AddForce(Body->GetForwardVector()*Throttle*BaseThrottle);
 }
 
-void UVehicleNavMovementComponent::IntedTurnRight(float ThrottleIn)
+void UVehicleNavMovementComponent::IntendTurnRight(float ThrottleIn)
 {
 	float Throttle = FMath::Clamp<float>(ThrottleIn, -1, 1);
 	float CurrentAngularSpeed = FMath::Abs(Body->GetPhysicsAngularVelocityInDegrees().Z);
@@ -40,11 +40,31 @@ void UVehicleNavMovementComponent::IntedTurnRight(float ThrottleIn)
 	ratio = FMath::Clamp<float>(ratio, 0, 1);
 	Throttle *= (1 - ratio);
 	Throttle = FMath::Clamp<float>(Throttle, -1, 1);
-	
+
 	FLWheel->AddForce(Body->GetForwardVector()*Throttle*BaseThrottle);
 	FRWheel->AddForce(Body->GetForwardVector()*Throttle*-BaseThrottle);
 	BLWheel->AddForce(Body->GetForwardVector()*Throttle*BaseThrottle);
 	BRWheel->AddForce(Body->GetForwardVector()*Throttle*-BaseThrottle);
+}
+
+void UVehicleNavMovementComponent::GetBackUpSide()
+{
+	// TODO fix this function.
+	FRotator CurrentRotation = GetOwner()->GetRootComponent()->GetComponentRotation();//GetActorRotation();
+	FVector Position = GetOwner()->GetActorLocation();
+	//UE_LOG(LogTemp, Warning, TEXT("Pre jump: %s"), *Position.ToString());
+	Position.Z += 300.0;
+	/*if (GetOwner()->SetActorLocation(Position, false, nullptr, ETeleportType::ResetPhysics)){
+		UE_LOG(LogTemp, Warning, TEXT("Got the jump: %s"),*Position.ToString());
+	}
+	//GetOwner()->SetActorRotation(FRotator(0, 0, 0), ETeleportType::ResetPhysics);
+	UE_LOG(LogTemp, Warning, TEXT("%s || %s"), *CurrentRotation.ToString(), *Position.ToString());
+	*/
+	if (FMath::Abs(CurrentRotation.Roll) > 120 ) {
+		GetOwner()->SetActorLocation(Position, false, nullptr, ETeleportType::ResetPhysics);
+		GetOwner()->SetActorRotation(FRotator(CurrentRotation.Pitch, CurrentRotation.Yaw, 0), ETeleportType::ResetPhysics);
+	}
+
 }
 
 void UVehicleNavMovementComponent::InitializeVariable(UStaticMeshComponent * Bdy, USphereComponent * FL, USphereComponent * FR, USphereComponent * BL, USphereComponent * BR)
