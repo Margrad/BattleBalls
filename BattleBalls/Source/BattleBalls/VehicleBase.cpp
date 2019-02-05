@@ -49,6 +49,11 @@ AVehicleBase::AVehicleBase()
 	WeaponComponent->InitializeComponent(BarrelBase, Barrel, BarrelMesh);
 }
 
+void AVehicleBase::SetTeam(FName NewTeam)
+{
+	Team = NewTeam;
+}
+
 // Called when the game starts or when spawned
 void AVehicleBase::BeginPlay()
 {

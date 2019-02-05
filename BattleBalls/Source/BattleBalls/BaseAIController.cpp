@@ -14,14 +14,6 @@ void ABaseAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	ThisVehicle = Cast<AVehicleBase>(GetPawn());
-	if(!ThisVehicle){
-		return;
-	}
-	TargetVehicle = Cast<AVehicleBase>(GetWorld()->GetFirstPlayerController()->GetPawn());
-	if (!ensure(TargetVehicle)) { return; }
-	if (!ensure(ThisVehicle)) { return; }
-
 }
 
 

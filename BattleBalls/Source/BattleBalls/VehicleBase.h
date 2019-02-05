@@ -85,6 +85,10 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Movement)
 		UVehicleNavMovementComponent* MovementComponent;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Movement)
+		void SetTeam(FName NewTeam);
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Movement)
+		FName GetTeam() { return Team; }
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -98,6 +102,9 @@ private:
 		float MaxSpeed = 770;
 	UPROPERTY(EditDefaultsOnly, Category = Movement)
 		float MaxRotation = 120;
+
+	UPROPERTY(EditDefaultsOnly, Category = Team)
+	FName Team = FName("Neutral");
 
 	void SetWheels(USphereComponent* Wheel);
 	void SetAbsorvers(UPhysicsConstraintComponent* Absorver);

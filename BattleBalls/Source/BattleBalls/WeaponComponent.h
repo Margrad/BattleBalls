@@ -52,7 +52,7 @@ private:
 	   
 
 	UPROPERTY(EditDefaultsOnly, Category = Fire)
-	float ReloadTime = 0.2;
+	float ReloadTime = 0.5;
 	float NextShotTime = 0;
 
 	UPROPERTY(EditDefaultsOnly, Category = Fire)
