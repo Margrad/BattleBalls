@@ -4,6 +4,11 @@
 #include "Engine/World.h"
 #include "VehicleBase.h"
 
+void ABaseAIController::LostPawn()
+{
+	Destroy();
+}
+
 void ABaseAIController::BeginPlay()
 {
 	Super::BeginPlay();

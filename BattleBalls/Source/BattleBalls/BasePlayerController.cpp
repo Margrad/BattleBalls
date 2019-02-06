@@ -14,6 +14,11 @@ void ABasePlayerController::Tick(float DeltaTime)
 	WeaponComponent->AutoAimAt(AimingAt);
 }
 
+void ABasePlayerController::LostPawn()
+{
+	//Destroy();
+}
+
 FVector ABasePlayerController::CrossAimingAt() {
 	int32 Xsize, Ysize;
 	GetViewportSize(Xsize,Ysize);

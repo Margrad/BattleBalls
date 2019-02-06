@@ -9,6 +9,8 @@
 #include "Camera/CameraComponent.h"
 #include "VehicleNavMovementComponent.h"
 #include "WeaponComponent.h"
+#include "BaseAIController.h"
+#include "BasePlayerController.h"
 
 
 // Sets default values
@@ -61,8 +63,22 @@ void AVehicleBase::SetTeam(FName NewTeam)
 float AVehicleBase::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
 {
 	CurrentHP -= DamageAmount;
-	if (IsDead()) {
+	AController* Controller = GetController();
+	if (IsDead() && Controller) {
+		IsPossibleTarget = false;
 		UnPossessed();
+		if (Cast<ABaseAIController>(Controller))
+		{
+			Cast<ABaseAIController>(Controller)->LostPawn();
+		}
+		else if (Cast<ABasePlayerController>(Controller))
+		{
+			Cast<ABasePlayerController>(Controller)->LostPawn();
+		}
+		else {
+			UE_LOG(LogTemp, Warning, TEXT("Could not cast to AI or Player Controller"));
+			Controller->Destroy();
+		}
 	}
 	return DamageAmount;
 }
@@ -113,17 +129,17 @@ void AVehicleBase::SetWheels(USphereComponent * Wheel)
 {
 	Wheel->SetCollisionProfileName(FName("PhysicsActor"));
 	Wheel->SetSimulatePhysics(true);
-	Wheel->SetMassOverrideInKg(NAME_None, 10);
+	Wheel->SetMassOverrideInKg(NAME_None, 20);
 }
 
 void AVehicleBase::SetAbsorvers(UPhysicsConstraintComponent * Absorver)
 {
 	Absorver->SetLinearXLimit(ELinearConstraintMotion::LCM_Locked, 0);
-	Absorver->SetLinearYLimit(ELinearConstraintMotion::LCM_Limited, 10);
-	Absorver->SetLinearZLimit(ELinearConstraintMotion::LCM_Locked, 0);
+	Absorver->SetLinearYLimit(ELinearConstraintMotion::LCM_Locked, 10);
+	Absorver->SetLinearZLimit(ELinearConstraintMotion::LCM_Limited, 10);
 	Absorver->SetLinearPositionDrive(true, true, true);
 	Absorver->SetLinearVelocityDrive(true, true, true);
-	Absorver->SetLinearDriveParams(50, 10, 0);
+	Absorver->SetLinearDriveParams(100, 20, 0);
 	Absorver->SetAngularSwing1Limit(EAngularConstraintMotion::ACM_Locked, 45);
 	Absorver->SetAngularSwing2Limit(EAngularConstraintMotion::ACM_Free, 45);
 	Absorver->SetAngularTwistLimit(EAngularConstraintMotion::ACM_Locked, 45);

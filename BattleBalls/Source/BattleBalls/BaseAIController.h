@@ -15,6 +15,10 @@ class BATTLEBALLS_API ABaseAIController : public AAIController
 {
 	GENERATED_BODY()
 
+public:
+	UFUNCTION(BlueprintCallable, Category = Dead)
+	void LostPawn();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

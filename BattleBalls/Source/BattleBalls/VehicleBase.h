@@ -100,6 +100,10 @@ public:
 	UFUNCTION(BlueprintPure, Category = HP)
 	float GetCurrentHP();
 
+	UFUNCTION(BlueprintPure, Category = AsTarget)
+	bool GetIsPossibleTarget() { return IsPossibleTarget; }
+
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -128,4 +132,5 @@ private:
 	void InitializeComponents();
 	void AttachComponents();
 	void SetCamera();
+	bool IsPossibleTarget = true;
 };

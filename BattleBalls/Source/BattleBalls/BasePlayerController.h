@@ -19,6 +19,10 @@ public:
 
 	virtual void Tick(float) override;
 
+
+	UFUNCTION(BlueprintCallable, Category = Dead)
+	void LostPawn();
+
 private:
 	// Ratio of the screen pointed by the crosshair from the top
 	// (0 is on the very top and 1 is ate the bottom)
