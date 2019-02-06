@@ -85,10 +85,21 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Movement)
 		UVehicleNavMovementComponent* MovementComponent;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Movement)
+	UFUNCTION(BlueprintCallable, Category = Team)
 		void SetTeam(FName NewTeam);
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Movement)
+	UFUNCTION(BlueprintCallable, Category = Team)
 		FName GetTeam() { return Team; }
+
+
+	UFUNCTION(BlueprintCallable, Category = Damage)
+	void TakeDamage(float Damage);
+	UFUNCTION(BlueprintPure, Category = HP)
+	bool IsDead();
+	UFUNCTION(BlueprintPure, Category = HP)
+	float GetMaxHP();
+	UFUNCTION(BlueprintPure, Category = HP)
+	float GetCurrentHP();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -102,6 +113,12 @@ private:
 		float MaxSpeed = 770;
 	UPROPERTY(EditDefaultsOnly, Category = Movement)
 		float MaxRotation = 120;
+	UPROPERTY(EditDefaultsOnly, Category = HP)
+		float MaxHP = 120;
+	UPROPERTY(EditDefaultsOnly, Category = HP)
+		float CurrentHP = 0;
+
+
 
 	UPROPERTY(EditDefaultsOnly, Category = Team)
 	FName Team = FName("Neutral");

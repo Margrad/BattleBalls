@@ -47,11 +47,34 @@ AVehicleBase::AVehicleBase()
 	SetCamera();
 	MovementComponent->InitializeVariable(Body, FLWheel, FRWheel, BLWheel, BRWheel);
 	WeaponComponent->InitializeComponent(BarrelBase, Barrel, BarrelMesh);
+
+	// Set Damage/HP Values
+	CurrentHP = MaxHP;
 }
 
 void AVehicleBase::SetTeam(FName NewTeam)
 {
 	Team = NewTeam;
+}
+
+void AVehicleBase::TakeDamage(float Damage)
+{
+	CurrentHP -= Damage;
+}
+
+bool AVehicleBase::IsDead()
+{
+	return CurrentHP <= 0;
+}
+
+float AVehicleBase::GetMaxHP()
+{
+	return MaxHP;
+}
+
+float AVehicleBase::GetCurrentHP()
+{
+	return CurrentHP;
 }
 
 // Called when the game starts or when spawned
