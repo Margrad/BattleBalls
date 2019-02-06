@@ -57,7 +57,7 @@ void UWeaponComponent::MoveBarrel(FVector PointToAim)
 	float DeltaT = GetWorld()->DeltaTimeSeconds;
 	float DifElevation =  DifPitch* MaxElevationSpeed * DeltaT;
 	float RawNewElevation = DifPitch + Barrel->RelativeRotation.Pitch;
-	RawNewElevation = FMath::Clamp<float>(RawNewElevation, -10, 75);
+	RawNewElevation = FMath::Clamp<float>(RawNewElevation, -3, 75);
 	Barrel->SetRelativeRotation(FRotator(RawNewElevation, 0, 0));
 
 	// Rotate Barrel

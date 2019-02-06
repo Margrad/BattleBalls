@@ -92,7 +92,7 @@ public:
 
 
 	UFUNCTION(BlueprintCallable, Category = Damage)
-	void TakeDamage(float Damage);
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser) override;
 	UFUNCTION(BlueprintPure, Category = HP)
 	bool IsDead();
 	UFUNCTION(BlueprintPure, Category = HP)

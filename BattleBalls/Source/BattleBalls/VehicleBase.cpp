@@ -57,14 +57,25 @@ void AVehicleBase::SetTeam(FName NewTeam)
 	Team = NewTeam;
 }
 
-void AVehicleBase::TakeDamage(float Damage)
+
+float AVehicleBase::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
 {
-	CurrentHP -= Damage;
+	CurrentHP -= DamageAmount;
+	if (IsDead()) {
+		UnPossessed();
+	}
+	return DamageAmount;
 }
 
 bool AVehicleBase::IsDead()
 {
-	return CurrentHP <= 0;
+	if (CurrentHP == 0) {
+		return true;
+	}else if(CurrentHP<0){
+		CurrentHP = 0;
+		return true;
+	}
+	return false;
 }
 
 float AVehicleBase::GetMaxHP()
@@ -153,22 +164,22 @@ void AVehicleBase::AttachComponents()
 {
 	SetRootComponent(Body);
 	FLAbsorver->AttachToComponent(Body, FAttachmentTransformRules::KeepRelativeTransform);
-	FLAbsorver->SetRelativeLocation(FVector(75, -75, -30));
+	FLAbsorver->SetRelativeLocation(FVector(70, -70, -35));
 	FLWheel->AttachToComponent(FLAbsorver, FAttachmentTransformRules::KeepRelativeTransform);
 	FLMask->AttachToComponent(FLWheel, FAttachmentTransformRules::KeepRelativeTransform);
 
 	FRAbsorver->AttachToComponent(Body, FAttachmentTransformRules::KeepRelativeTransform);
-	FRAbsorver->SetRelativeLocation(FVector(75, 75, -30));
+	FRAbsorver->SetRelativeLocation(FVector(70, 70, -35));
 	FRWheel->AttachToComponent(FRAbsorver, FAttachmentTransformRules::KeepRelativeTransform);
 	FRMask->AttachToComponent(FRWheel, FAttachmentTransformRules::KeepRelativeTransform);
 
 	BLAbsorver->AttachToComponent(Body, FAttachmentTransformRules::KeepRelativeTransform);
-	BLAbsorver->SetRelativeLocation(FVector(-75, -75, -30));
+	BLAbsorver->SetRelativeLocation(FVector(-70, -70, -35));
 	BLWheel->AttachToComponent(BLAbsorver, FAttachmentTransformRules::KeepRelativeTransform);
 	BLMask->AttachToComponent(BLWheel, FAttachmentTransformRules::KeepRelativeTransform);
 
 	BRAbsorver->AttachToComponent(Body, FAttachmentTransformRules::KeepRelativeTransform);
-	BRAbsorver->SetRelativeLocation(FVector(-75, 75, -30));
+	BRAbsorver->SetRelativeLocation(FVector(-70, 70, -35));
 	BRWheel->AttachToComponent(BRAbsorver, FAttachmentTransformRules::KeepRelativeTransform);
 	BRMask->AttachToComponent(BRWheel, FAttachmentTransformRules::KeepRelativeTransform);
 
