@@ -26,15 +26,5 @@ protected:
 	virtual void Tick(float) override;
 
 private:
-	AVehicleBase* ThisVehicle = nullptr;
 
-	// Used to set how close the vehicle will get to its target
-	UPROPERTY(EditDefaultsOnly, Category = Setup)
-	float AcceptanceRadius = 50;
-
-	// Aiming component
-	UAimingComponent* AimingComponent;
-
-	// Sets the PlayerTank(Enemy in this case)
-	AVehicleBase* TargetVehicle = nullptr;
 };

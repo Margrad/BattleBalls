@@ -90,7 +90,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Team)
 		FName GetTeam() { return Team; }
 
-
+	// Overrride function to define how the pawn takes damage
 	UFUNCTION(BlueprintCallable, Category = Damage)
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser) override;
 	UFUNCTION(BlueprintPure, Category = HP)
@@ -110,18 +110,12 @@ protected:
 
 private:
 
-	// Movement Settings 
-	UPROPERTY(EditDefaultsOnly, Category = Movement)
-		float BaseThrottle = 150000;
-	UPROPERTY(EditDefaultsOnly, Category = Movement)
-		float MaxSpeed = 770;
-	UPROPERTY(EditDefaultsOnly, Category = Movement)
-		float MaxRotation = 120;
+
+	// HP Settings
 	UPROPERTY(EditDefaultsOnly, Category = HP)
 		float MaxHP = 120;
 	UPROPERTY(EditDefaultsOnly, Category = HP)
 		float CurrentHP = 0;
-
 
 
 	UPROPERTY(EditDefaultsOnly, Category = Team)

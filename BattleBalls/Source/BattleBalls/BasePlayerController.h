@@ -14,12 +14,13 @@ class BATTLEBALLS_API ABasePlayerController : public APlayerController
 {
 	GENERATED_BODY()
 public:
+	// Gets the point the Crossair is aiming at
 	UFUNCTION(BlueprintCallable, Category = Fire)
 	FVector CrossAimingAt();
 
 	virtual void Tick(float) override;
 
-
+	// TODO define what happens when the Pawn dies
 	UFUNCTION(BlueprintCallable, Category = Dead)
 	void LostPawn();
 

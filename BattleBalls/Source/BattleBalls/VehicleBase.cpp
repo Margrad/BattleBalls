@@ -135,11 +135,11 @@ void AVehicleBase::SetWheels(USphereComponent * Wheel)
 void AVehicleBase::SetAbsorvers(UPhysicsConstraintComponent * Absorver)
 {
 	Absorver->SetLinearXLimit(ELinearConstraintMotion::LCM_Locked, 0);
-	Absorver->SetLinearYLimit(ELinearConstraintMotion::LCM_Locked, 10);
-	Absorver->SetLinearZLimit(ELinearConstraintMotion::LCM_Limited, 10);
+	Absorver->SetLinearYLimit(ELinearConstraintMotion::LCM_Locked, 0);
+	Absorver->SetLinearZLimit(ELinearConstraintMotion::LCM_Limited, 20);
 	Absorver->SetLinearPositionDrive(true, true, true);
 	Absorver->SetLinearVelocityDrive(true, true, true);
-	Absorver->SetLinearDriveParams(100, 20, 0);
+	Absorver->SetLinearDriveParams(16, 4, 0);
 	Absorver->SetAngularSwing1Limit(EAngularConstraintMotion::ACM_Locked, 45);
 	Absorver->SetAngularSwing2Limit(EAngularConstraintMotion::ACM_Free, 45);
 	Absorver->SetAngularTwistLimit(EAngularConstraintMotion::ACM_Locked, 45);
