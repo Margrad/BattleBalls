@@ -140,8 +140,8 @@ void AVehicleBase::SetWheels(USphereComponent * Wheel)
 void AVehicleBase::SetAbsorvers(UPhysicsConstraintComponent * Absorver)
 {
 	Absorver->SetLinearXLimit(ELinearConstraintMotion::LCM_Locked, 0);
-	Absorver->SetLinearYLimit(ELinearConstraintMotion::LCM_Locked, 0);
-	Absorver->SetLinearZLimit(ELinearConstraintMotion::LCM_Limited, 10);
+	Absorver->SetLinearYLimit(ELinearConstraintMotion::LCM_Limited, 10);
+	Absorver->SetLinearZLimit(ELinearConstraintMotion::LCM_Locked, 0);
 	Absorver->SetLinearPositionDrive(true, true, true);
 	Absorver->SetLinearVelocityDrive(true, true, true);
 	Absorver->SetLinearDriveParams(200, 50, 0);
@@ -185,22 +185,22 @@ void AVehicleBase::AttachComponents()
 {
 	SetRootComponent(Body);
 	FLAbsorver->AttachToComponent(Body, FAttachmentTransformRules::KeepRelativeTransform);
-	FLAbsorver->SetRelativeLocation(FVector(70, -70, -45));
+	FLAbsorver->SetRelativeLocation(FVector(65, -65, -55));
 	FLWheel->AttachToComponent(FLAbsorver, FAttachmentTransformRules::KeepRelativeTransform);
 	FLMask->AttachToComponent(FLWheel, FAttachmentTransformRules::KeepRelativeTransform);
 
 	FRAbsorver->AttachToComponent(Body, FAttachmentTransformRules::KeepRelativeTransform);
-	FRAbsorver->SetRelativeLocation(FVector(70, 70, -45));
+	FRAbsorver->SetRelativeLocation(FVector(65, 65, -55));
 	FRWheel->AttachToComponent(FRAbsorver, FAttachmentTransformRules::KeepRelativeTransform);
 	FRMask->AttachToComponent(FRWheel, FAttachmentTransformRules::KeepRelativeTransform);
 
 	BLAbsorver->AttachToComponent(Body, FAttachmentTransformRules::KeepRelativeTransform);
-	BLAbsorver->SetRelativeLocation(FVector(-70, -70, -45));
+	BLAbsorver->SetRelativeLocation(FVector(-65, -65, -55));
 	BLWheel->AttachToComponent(BLAbsorver, FAttachmentTransformRules::KeepRelativeTransform);
 	BLMask->AttachToComponent(BLWheel, FAttachmentTransformRules::KeepRelativeTransform);
 
 	BRAbsorver->AttachToComponent(Body, FAttachmentTransformRules::KeepRelativeTransform);
-	BRAbsorver->SetRelativeLocation(FVector(-70, 70, -45));
+	BRAbsorver->SetRelativeLocation(FVector(-65, 65, -55));
 	BRWheel->AttachToComponent(BRAbsorver, FAttachmentTransformRules::KeepRelativeTransform);
 	BRMask->AttachToComponent(BRWheel, FAttachmentTransformRules::KeepRelativeTransform);
 

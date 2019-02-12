@@ -16,7 +16,7 @@ float ABaseAIController::EvaluateTarget(AActor * Target)
 		return 0;
 	}
 	float distance = (GetPawn()->GetActorLocation()-Target->GetActorLocation()).Size();
-	float LocationValue = 1 / (distance) * 10000;
+	float LocationValue = 10000 / (distance + 1000);
 	float HPValue = Cast<AVehicleBase>(Target)->GetHPRatio()*20;
 
 	return LocationValue + HPValue;
@@ -39,10 +39,13 @@ AActor* ABaseAIController::GetTargetFromArray(TArray<AActor*> FoundEnemies)
 		}
 		i++;
 	}
+	if (Max <= 0) { return nullptr; }
+
+	/*
 	if (CurrentTarget != FoundEnemies[MaxIndex]) {
 		CurrentTarget = FoundEnemies[MaxIndex];
-		UE_LOG(LogTemp, Warning, TEXT("%s has new target: %s : %f"), *GetPawn()->GetName(), *CurrentTarget->GetName(), Max);
-	}
+		//UE_LOG(LogTemp, Warning, TEXT("%s has new target: %s : %f"), *GetPawn()->GetName(), *CurrentTarget->GetName(), Max);
+	}*/
 	return FoundEnemies[MaxIndex];
 }
 
