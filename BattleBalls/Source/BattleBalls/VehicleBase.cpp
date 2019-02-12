@@ -41,11 +41,11 @@ AVehicleBase::AVehicleBase()
 	BLMask->SetCollisionProfileName(FName("OverlapAll"));
 	BRMask->SetCollisionProfileName(FName("OverlapAll"));
 
-	FLAbsorver->SetConstrainedComponents(Body, NAME_None, FLWheel, NAME_None);
+	/*FLAbsorver->SetConstrainedComponents(Body, NAME_None, FLWheel, NAME_None);
 	FRAbsorver->SetConstrainedComponents(Body, NAME_None, FRWheel, NAME_None);
 	BLAbsorver->SetConstrainedComponents(Body, NAME_None, BLWheel, NAME_None);
 	BRAbsorver->SetConstrainedComponents(Body, NAME_None, BRWheel, NAME_None);
-
+	*/
 	SetCamera();
 	MovementComponent->InitializeVariable(Body, FLWheel, FRWheel, BLWheel, BRWheel);
 	WeaponComponent->InitializeComponent(BarrelBase, Barrel, BarrelMesh);
@@ -104,6 +104,11 @@ float AVehicleBase::GetCurrentHP()
 	return CurrentHP;
 }
 
+float AVehicleBase::GetHPRatio()
+{
+	return CurrentHP/MaxHP;
+}
+
 // Called when the game starts or when spawned
 void AVehicleBase::BeginPlay()
 {
@@ -129,17 +134,17 @@ void AVehicleBase::SetWheels(USphereComponent * Wheel)
 {
 	Wheel->SetCollisionProfileName(FName("PhysicsActor"));
 	Wheel->SetSimulatePhysics(true);
-	Wheel->SetMassOverrideInKg(NAME_None, 20);
+	Wheel->SetMassOverrideInKg(NAME_None, 5);
 }
 
 void AVehicleBase::SetAbsorvers(UPhysicsConstraintComponent * Absorver)
 {
 	Absorver->SetLinearXLimit(ELinearConstraintMotion::LCM_Locked, 0);
 	Absorver->SetLinearYLimit(ELinearConstraintMotion::LCM_Locked, 0);
-	Absorver->SetLinearZLimit(ELinearConstraintMotion::LCM_Limited, 20);
+	Absorver->SetLinearZLimit(ELinearConstraintMotion::LCM_Limited, 10);
 	Absorver->SetLinearPositionDrive(true, true, true);
 	Absorver->SetLinearVelocityDrive(true, true, true);
-	Absorver->SetLinearDriveParams(16, 4, 0);
+	Absorver->SetLinearDriveParams(200, 50, 0);
 	Absorver->SetAngularSwing1Limit(EAngularConstraintMotion::ACM_Locked, 45);
 	Absorver->SetAngularSwing2Limit(EAngularConstraintMotion::ACM_Free, 45);
 	Absorver->SetAngularTwistLimit(EAngularConstraintMotion::ACM_Locked, 45);
@@ -180,22 +185,22 @@ void AVehicleBase::AttachComponents()
 {
 	SetRootComponent(Body);
 	FLAbsorver->AttachToComponent(Body, FAttachmentTransformRules::KeepRelativeTransform);
-	FLAbsorver->SetRelativeLocation(FVector(70, -70, -35));
+	FLAbsorver->SetRelativeLocation(FVector(70, -70, -45));
 	FLWheel->AttachToComponent(FLAbsorver, FAttachmentTransformRules::KeepRelativeTransform);
 	FLMask->AttachToComponent(FLWheel, FAttachmentTransformRules::KeepRelativeTransform);
 
 	FRAbsorver->AttachToComponent(Body, FAttachmentTransformRules::KeepRelativeTransform);
-	FRAbsorver->SetRelativeLocation(FVector(70, 70, -35));
+	FRAbsorver->SetRelativeLocation(FVector(70, 70, -45));
 	FRWheel->AttachToComponent(FRAbsorver, FAttachmentTransformRules::KeepRelativeTransform);
 	FRMask->AttachToComponent(FRWheel, FAttachmentTransformRules::KeepRelativeTransform);
 
 	BLAbsorver->AttachToComponent(Body, FAttachmentTransformRules::KeepRelativeTransform);
-	BLAbsorver->SetRelativeLocation(FVector(-70, -70, -35));
+	BLAbsorver->SetRelativeLocation(FVector(-70, -70, -45));
 	BLWheel->AttachToComponent(BLAbsorver, FAttachmentTransformRules::KeepRelativeTransform);
 	BLMask->AttachToComponent(BLWheel, FAttachmentTransformRules::KeepRelativeTransform);
 
 	BRAbsorver->AttachToComponent(Body, FAttachmentTransformRules::KeepRelativeTransform);
-	BRAbsorver->SetRelativeLocation(FVector(-70, 70, -35));
+	BRAbsorver->SetRelativeLocation(FVector(-70, 70, -45));
 	BRWheel->AttachToComponent(BRAbsorver, FAttachmentTransformRules::KeepRelativeTransform);
 	BRMask->AttachToComponent(BRWheel, FAttachmentTransformRules::KeepRelativeTransform);
 

@@ -19,6 +19,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Dead)
 	void LostPawn();
 
+	
+	UFUNCTION(BlueprintCallable, Category = TargetEvaluation)
+	AActor* GetTargetFromArray(TArray<AActor*> FoundEnemies);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -26,5 +30,8 @@ protected:
 	virtual void Tick(float) override;
 
 private:
+	float EvaluateTarget(AActor* Target);
+
+	AActor* CurrentTarget = nullptr;
 
 };

@@ -99,6 +99,8 @@ public:
 	float GetMaxHP();
 	UFUNCTION(BlueprintPure, Category = HP)
 	float GetCurrentHP();
+	UFUNCTION(BlueprintPure, Category = HP)
+	float GetHPRatio();
 
 	UFUNCTION(BlueprintPure, Category = AsTarget)
 	bool GetIsPossibleTarget() { return IsPossibleTarget; }
