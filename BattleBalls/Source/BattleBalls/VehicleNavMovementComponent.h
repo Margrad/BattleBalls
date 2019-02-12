@@ -30,7 +30,7 @@ public:
 	void GetBackUpSide();
 	// Sets the component pointers to the needed vehicle wheels F=Front, B=Back, L=Left, R=Right
 	UFUNCTION(BlueprintCallable, Category = Movemente)
-	void InitializeVariable(UStaticMeshComponent* Bdy, USphereComponent* FL, USphereComponent* FR, USphereComponent* BL, USphereComponent* BR);
+	void InitializeWheelsVariables(UStaticMeshComponent * Bdy, USphereComponent * FL, USphereComponent * FR, USphereComponent * BL, USphereComponent * BR, USphereComponent * CL, USphereComponent * CR);
 
 private:
 	UPROPERTY(VisibleAnywhere, Category = Components)
@@ -43,14 +43,18 @@ private:
 		USphereComponent* FRWheel;
 	UPROPERTY(VisibleAnywhere, Category = Components)
 		USphereComponent* BRWheel;
+	UPROPERTY(VisibleAnywhere, Category = Components)
+		USphereComponent* CRWheel;
+	UPROPERTY(VisibleAnywhere, Category = Components)
+		USphereComponent* CLWheel;
 
 	// Movement Settings 
 	// Max Throttle for each wheel
 	UPROPERTY(EditDefaultsOnly, Category = Movement)
-	float BaseThrottle = 100000;
+	float BaseThrottle = 66000;
 	// Max Speed, as the speed increases the throttle on the wheels is decreased
 	UPROPERTY(EditDefaultsOnly, Category = Movement)
-	float MaxSpeed = 670;
+	float MaxSpeed = 770;
 	// Max Rotation speed, as the rotation speed increases the throttle on the wheels is decreased
 	UPROPERTY(EditDefaultsOnly, Category = Movement)
 	float MaxRotation = 90;

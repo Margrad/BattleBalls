@@ -30,6 +30,8 @@ void UVehicleNavMovementComponent::IntendMoveForward(float ThrottleIn)
 	FRWheel->AddForce(Body->GetForwardVector()*Throttle*BaseThrottle);
 	BLWheel->AddForce(Body->GetForwardVector()*Throttle*BaseThrottle);
 	BRWheel->AddForce(Body->GetForwardVector()*Throttle*BaseThrottle);
+	CLWheel->AddForce(Body->GetForwardVector()*Throttle*BaseThrottle);
+	CRWheel->AddForce(Body->GetForwardVector()*Throttle*BaseThrottle);
 }
 
 void UVehicleNavMovementComponent::IntendTurnRight(float ThrottleIn)
@@ -45,6 +47,8 @@ void UVehicleNavMovementComponent::IntendTurnRight(float ThrottleIn)
 	FRWheel->AddForce(Body->GetForwardVector()*Throttle*-BaseThrottle);
 	BLWheel->AddForce(Body->GetForwardVector()*Throttle*BaseThrottle);
 	BRWheel->AddForce(Body->GetForwardVector()*Throttle*-BaseThrottle);
+	CLWheel->AddForce(Body->GetForwardVector()*Throttle*BaseThrottle);
+	CRWheel->AddForce(Body->GetForwardVector()*Throttle*-BaseThrottle);
 }
 
 void UVehicleNavMovementComponent::GetBackUpSide()
@@ -61,13 +65,15 @@ void UVehicleNavMovementComponent::GetBackUpSide()
 
 }
 
-void UVehicleNavMovementComponent::InitializeVariable(UStaticMeshComponent * Bdy, USphereComponent * FL, USphereComponent * FR, USphereComponent * BL, USphereComponent * BR)
+void UVehicleNavMovementComponent::InitializeWheelsVariables(UStaticMeshComponent * Bdy, USphereComponent * FL, USphereComponent * FR, USphereComponent * BL, USphereComponent * BR, USphereComponent * CL, USphereComponent * CR)
 {
 		Body=Bdy;
 		FLWheel=FL;
 		BLWheel=BL;
-		FRWheel=FR;
-		BRWheel=BR;
+		FRWheel = FR;
+		BRWheel = BR;
+		CRWheel = CR;
+		CLWheel = CL;
 }
 
 

@@ -55,6 +55,11 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Components)
 		UStaticMeshComponent* BRMask;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Components)
+		UStaticMeshComponent* CLMask;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Components)
+		UStaticMeshComponent* CRMask;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Components)
 		USphereComponent* FLWheel;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Components)
 		USphereComponent* BLWheel;
@@ -63,6 +68,24 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Components)
 		USphereComponent* BRWheel;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Components)
+		USphereComponent* CRWheel;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Components)
+		USphereComponent* CLWheel;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Components)
+		USphereComponent* FLAxle;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Components)
+		USphereComponent* BLAxle;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Components)
+		USphereComponent* FRAxle;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Components)
+		USphereComponent* BRAxle;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Components)
+		USphereComponent* CRAxle;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Components)
+		USphereComponent* CLAxle;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Components)
 		UPhysicsConstraintComponent* FLAbsorver;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Components)
 		UPhysicsConstraintComponent* BLAbsorver;
@@ -70,6 +93,23 @@ public:
 		UPhysicsConstraintComponent* FRAbsorver;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Components)
 		UPhysicsConstraintComponent* BRAbsorver;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Components)
+		UPhysicsConstraintComponent* CRAbsorver;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Components)
+		UPhysicsConstraintComponent* CLAbsorver;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Components)
+		UPhysicsConstraintComponent* FLSpiner;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Components)
+		UPhysicsConstraintComponent* BLSpiner;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Components)
+		UPhysicsConstraintComponent* FRSpiner;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Components)
+		UPhysicsConstraintComponent* BRSpiner;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Components)
+		UPhysicsConstraintComponent* CRSpiner;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Components)
+		UPhysicsConstraintComponent* CLSpiner;
 
 	// Gun Section
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Weapon)
@@ -124,9 +164,12 @@ private:
 	FName Team = FName("Neutral");
 
 	void SetWheels(USphereComponent* Wheel);
+	void SetAxles(USphereComponent * Axle);
 	void SetAbsorvers(UPhysicsConstraintComponent* Absorver);
+	void SetSpiners(UPhysicsConstraintComponent* Spiner);
 	void InitializeComponents();
 	void AttachComponents();
+	void SetWheelInPosition(USphereComponent* Wheel, USphereComponent* Axle, UPhysicsConstraintComponent* Absorver, UPhysicsConstraintComponent* Spiner, UStaticMeshComponent* Mask, FVector Position);
 	void SetCamera();
 	bool IsPossibleTarget = true;
 };
