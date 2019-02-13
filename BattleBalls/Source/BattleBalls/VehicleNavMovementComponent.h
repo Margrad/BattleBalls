@@ -44,13 +44,13 @@ private:
 	// Movement Settings 
 	// Max Throttle for each wheel
 	UPROPERTY(EditDefaultsOnly, Category = Movement)
-	float BaseThrottle = 69000;
+	float BaseThrottle = 70000;
 	// Max Speed, as the speed increases the throttle on the wheels is decreased
 	UPROPERTY(EditDefaultsOnly, Category = Movement)
-	float MaxSpeed = 770;
+	float MaxSpeed = 700;
 	// Max Rotation speed, as the rotation speed increases the throttle on the wheels is decreased
 	UPROPERTY(EditDefaultsOnly, Category = Movement)
-	float MaxRotation = 90;
+	float MaxRotation = 120;
 
 	// This function is override so the created movement functions can be used with the Engine Navigation System
 	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;

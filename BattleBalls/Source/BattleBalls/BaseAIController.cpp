@@ -22,7 +22,7 @@ void ABaseAIController::Tick(float DeltaTime)
 	// TODO add proper evaluation
 
 	// Check if target is not null and moves arround it;
-	MoveAroundTarget();
+	// MoveAroundTarget();
 }
 
 
@@ -69,7 +69,10 @@ AActor* ABaseAIController::GetTargetFromArray(TArray<AActor*> FoundEnemies)
 
 void ABaseAIController::MoveAroundTarget()
 {
-	if (!Blackboard->GetValueAsObject("Enemy")) { return; }
+	if (!Blackboard->GetValueAsObject("Enemy")) {
+		UE_LOG(LogTemp, Warning, TEXT("Ups..."));
+		return; 
+	}
 	
 	FVector TargetLocation = Cast<AActor>(Blackboard->GetValueAsObject("Enemy"))->GetActorLocation();
 	FVector Distance = TargetLocation - GetPawn()->GetActorLocation();
@@ -80,5 +83,5 @@ void ABaseAIController::MoveAroundTarget()
 	//	MoveToLocation(NewLocation1.GetSafeNormal()*500, 100, false);
 	//	return ;
 	//}
-	MoveToLocation(NewLocation2.GetSafeNormal() * 500, 100, false);
+	MoveToLocation(NewLocation2.GetSafeNormal() * 500, 100, false, true, true, false);
 }
