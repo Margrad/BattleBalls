@@ -176,7 +176,7 @@ void AVehicleBase::SetWheels(USphereComponent * Wheel)
 {
 	Wheel->SetCollisionProfileName(FName("PhysicsActor"));
 	Wheel->SetSimulatePhysics(true);
-	Wheel->SetMassOverrideInKg(NAME_None, 5);
+	Wheel->SetMassOverrideInKg(NAME_None, 20);
 }
 
 void AVehicleBase::SetAxles(USphereComponent * Axle)
