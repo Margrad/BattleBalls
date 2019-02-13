@@ -86,7 +86,7 @@ AVehicleBase::AVehicleBase()
 	SetCamera();
 	MovementComponent->InitializeWheelsVariables(Body, FLWheel, FRWheel, BLWheel, BRWheel, CLWheel, CRWheel);
 
-	BarrelMesh->SetRelativeLocation(FVector(65, 0, 0));
+	BarrelMesh->SetRelativeLocation(FVector(95, 0, 0));
 	BarrelMesh->SetRelativeScale3D(FVector(0.2, 0.2, 1));
 	BarrelMesh->SetRelativeRotation(FRotator(-90.f, 0.f, 0.f));
 
@@ -190,10 +190,10 @@ void AVehicleBase::SetAbsorvers(UPhysicsConstraintComponent * Absorver)
 {
 	Absorver->SetLinearXLimit(ELinearConstraintMotion::LCM_Locked, 0);
 	Absorver->SetLinearYLimit(ELinearConstraintMotion::LCM_Locked, 0);
-	Absorver->SetLinearZLimit(ELinearConstraintMotion::LCM_Limited, 10);
+	Absorver->SetLinearZLimit(ELinearConstraintMotion::LCM_Limited, 40);
 	Absorver->SetLinearPositionDrive(true, true, true);
 	Absorver->SetLinearVelocityDrive(true, true, true);
-	Absorver->SetLinearDriveParams(200, 50, 0);
+	Absorver->SetLinearDriveParams(2500, 500, 0);
 	Absorver->SetAngularSwing1Limit(EAngularConstraintMotion::ACM_Locked, 45);
 	Absorver->SetAngularSwing2Limit(EAngularConstraintMotion::ACM_Locked, 45);
 	Absorver->SetAngularTwistLimit(EAngularConstraintMotion::ACM_Locked, 45);
@@ -272,12 +272,12 @@ void AVehicleBase::AttachComponents()
 {
 	SetRootComponent(Body);
 
-	SetWheelInPosition(FLWheel, FLAxle, FLAbsorver, FLSpiner, FLMask, FVector(87, -71, -55));
-	SetWheelInPosition(FRWheel, FRAxle, FRAbsorver, FRSpiner, FRMask, FVector(87, 71, -55));
-	SetWheelInPosition(BLWheel, BLAxle, BLAbsorver, BLSpiner, BLMask, FVector(-87, -71, -55));
-	SetWheelInPosition(BRWheel, BRAxle, BRAbsorver, BRSpiner, BRMask, FVector(-87, 71, -55));
-	SetWheelInPosition(CLWheel, CLAxle, CLAbsorver, CLSpiner, CLMask, FVector(0, -100, -55));
-	SetWheelInPosition(CRWheel, CRAxle, CRAbsorver, CRSpiner, CRMask, FVector(0, 100, -55));
+	SetWheelInPosition(FLWheel, FLAxle, FLAbsorver, FLSpiner, FLMask, FVector(87, -71, -85));
+	SetWheelInPosition(FRWheel, FRAxle, FRAbsorver, FRSpiner, FRMask, FVector(87, 71, -85));
+	SetWheelInPosition(BLWheel, BLAxle, BLAbsorver, BLSpiner, BLMask, FVector(-87, -71, -85));
+	SetWheelInPosition(BRWheel, BRAxle, BRAbsorver, BRSpiner, BRMask, FVector(-87, 71, -85));
+	SetWheelInPosition(CLWheel, CLAxle, CLAbsorver, CLSpiner, CLMask, FVector(0, -100, -85));
+	SetWheelInPosition(CRWheel, CRAxle, CRAbsorver, CRSpiner, CRMask, FVector(0, 100, -85));
 
 	BarrelBase->AttachToComponent(Body, FAttachmentTransformRules::KeepRelativeTransform);
 	Barrel->AttachToComponent(BarrelBase, FAttachmentTransformRules::KeepRelativeTransform);
