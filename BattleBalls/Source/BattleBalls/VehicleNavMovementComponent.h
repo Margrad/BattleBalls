@@ -33,25 +33,18 @@ public:
 	void InitializeWheelsVariables(UStaticMeshComponent * Bdy, USphereComponent * FL, USphereComponent * FR, USphereComponent * BL, USphereComponent * BR, USphereComponent * CL, USphereComponent * CR);
 
 private:
-	UPROPERTY(VisibleAnywhere, Category = Components)
 		UStaticMeshComponent* Body;
-	UPROPERTY(VisibleAnywhere, Category = Components)
 		USphereComponent* FLWheel;
-	UPROPERTY(VisibleAnywhere, Category = Components)
 		USphereComponent* BLWheel;
-	UPROPERTY(VisibleAnywhere, Category = Components)
 		USphereComponent* FRWheel;
-	UPROPERTY(VisibleAnywhere, Category = Components)
 		USphereComponent* BRWheel;
-	UPROPERTY(VisibleAnywhere, Category = Components)
 		USphereComponent* CRWheel;
-	UPROPERTY(VisibleAnywhere, Category = Components)
 		USphereComponent* CLWheel;
 
 	// Movement Settings 
 	// Max Throttle for each wheel
 	UPROPERTY(EditDefaultsOnly, Category = Movement)
-	float BaseThrottle = 66000;
+	float BaseThrottle = 69000;
 	// Max Speed, as the speed increases the throttle on the wheels is decreased
 	UPROPERTY(EditDefaultsOnly, Category = Movement)
 	float MaxSpeed = 770;

@@ -3,11 +3,28 @@
 #include "BaseAIController.h"
 #include "Engine/World.h"
 #include "VehicleBase.h"
-
+#include "BehaviorTree/BlackboardComponent.h"
 void ABaseAIController::LostPawn()
 {
 	Destroy();
 }
+
+
+void ABaseAIController::BeginPlay()
+{
+	Super::BeginPlay();
+
+}
+
+void ABaseAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	// TODO add proper evaluation
+
+	// Check if target is not null and moves arround it;
+	MoveAroundTarget();
+}
+
 
 float ABaseAIController::EvaluateTarget(AActor * Target)
 {
@@ -15,12 +32,13 @@ float ABaseAIController::EvaluateTarget(AActor * Target)
 	{
 		return 0;
 	}
-	float distance = (GetPawn()->GetActorLocation()-Target->GetActorLocation()).Size();
+	float distance = (GetPawn()->GetActorLocation() - Target->GetActorLocation()).Size();
 	float LocationValue = 10000 / (distance + 1000);
-	float HPValue = Cast<AVehicleBase>(Target)->GetHPRatio()*20;
+	float HPValue = Cast<AVehicleBase>(Target)->GetHPRatio() * 20;
 
 	return LocationValue + HPValue;
 }
+
 
 AActor* ABaseAIController::GetTargetFromArray(TArray<AActor*> FoundEnemies)
 {
@@ -49,18 +67,18 @@ AActor* ABaseAIController::GetTargetFromArray(TArray<AActor*> FoundEnemies)
 	return FoundEnemies[MaxIndex];
 }
 
-void ABaseAIController::BeginPlay()
+void ABaseAIController::MoveAroundTarget()
 {
-	Super::BeginPlay();
+	if (!Blackboard->GetValueAsObject("Enemy")) { return; }
+	
+	FVector TargetLocation = Cast<AActor>(Blackboard->GetValueAsObject("Enemy"))->GetActorLocation();
+	FVector Distance = TargetLocation - GetPawn()->GetActorLocation();
+	//FVector NewLocation1 = FVector(-Distance.Y, Distance.X, Distance.Z)+TargetLocation;
+	FVector NewLocation2 = FVector(Distance.Y, -Distance.X, Distance.Z)+TargetLocation;
 
+	//if (NewLocation1.Size() < NewLocation2.Size()) {
+	//	MoveToLocation(NewLocation1.GetSafeNormal()*500, 100, false);
+	//	return ;
+	//}
+	MoveToLocation(NewLocation2.GetSafeNormal() * 500, 100, false);
 }
-
-void ABaseAIController::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-	// TODO add proper evaluation
-
-}
-
-
-

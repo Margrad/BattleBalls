@@ -7,6 +7,7 @@
 #include "BaseAIController.generated.h"
 class UAimingComponent;
 class AVehicleBase;
+
 /*
 * Used to setup the AIController blueprint	
 */
@@ -19,9 +20,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Dead)
 	void LostPawn();
 
-	
+
 	UFUNCTION(BlueprintCallable, Category = TargetEvaluation)
-	AActor* GetTargetFromArray(TArray<AActor*> FoundEnemies);
+		AActor* GetTargetFromArray(TArray<AActor*> FoundEnemies);
+
+	UFUNCTION(BlueprintCallable, Category = TargetEvaluation)
+	void MoveAroundTarget();
 
 protected:
 	// Called when the game starts or when spawned
