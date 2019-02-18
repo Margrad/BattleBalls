@@ -19,7 +19,6 @@ void ABaseAIController::BeginPlay()
 void ABaseAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	// TODO add proper evaluation
 
 	// Check if target is not null and moves arround it;
 	// MoveAroundTarget();
@@ -72,11 +71,11 @@ void ABaseAIController::MoveAroundTarget()
 	FVector TargetLocation = Cast<AActor>(Blackboard->GetValueAsObject("Enemy"))->GetActorLocation();
 	FVector Distance = TargetLocation - GetPawn()->GetActorLocation();
 	//FVector NewLocation1 = FVector(-Distance.Y, Distance.X, Distance.Z)+TargetLocation;
-	FVector NewLocation2 = FVector(Distance.Y, -Distance.X, Distance.Z)+TargetLocation;
+	FVector NewLocation2 = FVector(Distance.Y, -Distance.X, Distance.Z).GetSafeNormal() * 1000 +TargetLocation;
 
 	//if (NewLocation1.Size() < NewLocation2.Size()) {
 	//	MoveToLocation(NewLocation1.GetSafeNormal()*500, 100, false);
 	//	return ;
 	//}
-	MoveToLocation(NewLocation2.GetSafeNormal() * 500, 100, false, true, true, false);
+	MoveToLocation(NewLocation2, 100, false, true, true, false);
 }

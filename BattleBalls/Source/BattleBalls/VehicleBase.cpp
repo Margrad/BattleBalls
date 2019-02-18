@@ -86,9 +86,9 @@ AVehicleBase::AVehicleBase()
 	SetCamera();
 	MovementComponent->InitializeWheelsVariables(Body, FLWheel, FRWheel, BLWheel, BRWheel, CLWheel, CRWheel);
 
-	BarrelMesh->SetRelativeLocation(FVector(95, 0, 0));
+	BarrelMesh->SetRelativeLocation(FVector(50, 0, 0));
 	BarrelMesh->SetRelativeScale3D(FVector(0.2, 0.2, 1));
-	BarrelMesh->SetRelativeRotation(FRotator(-75.f, 0.f, 0.f));
+	BarrelMesh->SetRelativeRotation(FRotator(-90.f, 0.f, 0.f));
 
 	WeaponComponent->InitializeComponent(BarrelBase, Barrel, BarrelMesh);
 
