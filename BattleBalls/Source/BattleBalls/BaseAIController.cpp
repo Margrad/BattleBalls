@@ -40,7 +40,7 @@ float ABaseAIController::EvaluateTarget(AActor * Target)
 }
 
 
-AActor* ABaseAIController::GetTargetFromArray(TArray<AActor*> FoundEnemies)
+AActor* ABaseAIController::SelectTargetFromArray(TArray<AActor*> FoundEnemies)
 {
 	if (FoundEnemies.Num() == 0) { return nullptr; }
 	TArray<float> Evaluations;
@@ -59,11 +59,6 @@ AActor* ABaseAIController::GetTargetFromArray(TArray<AActor*> FoundEnemies)
 	}
 	if (Max <= 0) { return nullptr; }
 
-	/*
-	if (CurrentTarget != FoundEnemies[MaxIndex]) {
-		CurrentTarget = FoundEnemies[MaxIndex];
-		//UE_LOG(LogTemp, Warning, TEXT("%s has new target: %s : %f"), *GetPawn()->GetName(), *CurrentTarget->GetName(), Max);
-	}*/
 	return FoundEnemies[MaxIndex];
 }
 

@@ -22,8 +22,10 @@ public:
 
 
 	UFUNCTION(BlueprintCallable, Category = TargetEvaluation)
-		AActor* GetTargetFromArray(TArray<AActor*> FoundEnemies);
+	AActor* SelectTargetFromArray(TArray<AActor*> FoundEnemies);
 
+
+	// TODO check why it's not working
 	UFUNCTION(BlueprintCallable, Category = TargetEvaluation)
 	void MoveAroundTarget();
 

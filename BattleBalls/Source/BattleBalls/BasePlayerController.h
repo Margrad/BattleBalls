@@ -20,7 +20,7 @@ public:
 
 	virtual void Tick(float) override;
 
-	// TODO define what happens when the Pawn dies
+	// TODO define what happens when the Pawn dies(how long until it disapears and possible animation)
 	UFUNCTION(BlueprintCallable, Category = Dead)
 	void LostPawn();
 

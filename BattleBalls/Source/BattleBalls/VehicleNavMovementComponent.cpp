@@ -53,17 +53,20 @@ void UVehicleNavMovementComponent::IntendTurnRight(float ThrottleIn)
 
 void UVehicleNavMovementComponent::GetBackUpSide()
 {
-	// TODO fix this function.
-	FRotator CurrentRotation = GetOwner()->GetRootComponent()->GetComponentRotation();//GetActorRotation();
-	FVector Position = GetOwner()->GetActorLocation();
-	//UE_LOG(LogTemp, Warning, TEXT("Pre jump: %s"), *Position.ToString());
-	Position.Z += 300.0;
-	if (FMath::Abs(CurrentRotation.Roll) > 120 ) {
-		GetOwner()->SetActorLocation(Position, true, nullptr, ETeleportType::ResetPhysics);
-		GetOwner()->SetActorRotation(FRotator(0, 0, 0), ETeleportType::None);
-	}
 
+	FRotator CurrentRotation = GetOwner()->GetRootComponent()->GetComponentRotation();
+	FVector Position = GetOwner()->GetActorLocation();
+	while (FMath::Abs(CurrentRotation.Roll) > 120) {
+		Position.Z += 1000.0;
+		GetOwner()->SetActorLocation(Position, true, nullptr, ETeleportType::None);
+		CurrentRotation.Roll = 0;
+		GetOwner()->SetActorRotation(CurrentRotation, ETeleportType::ResetPhysics);
+		Position.Z -= 990.0;
+		GetOwner()->SetActorLocation(Position, true, nullptr, ETeleportType::ResetPhysics);
+		CurrentRotation = GetOwner()->GetRootComponent()->GetComponentRotation();
+	}
 }
+
 
 void UVehicleNavMovementComponent::InitializeWheelsVariables(UStaticMeshComponent * Bdy, USphereComponent * FL, USphereComponent * FR, USphereComponent * BL, USphereComponent * BR, USphereComponent * CL, USphereComponent * CR)
 {
