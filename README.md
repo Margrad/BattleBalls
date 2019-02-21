@@ -4,6 +4,6 @@ This is a pet project of a game made with Unreal Engine and C++. The objective o
 
 
 Current Point in the development cycle:
--> Add Function <- Add Damage Mechanics
+-> Add Function <- Add Sound to fire and HP Bars
 -> Make it work 
 -> Clean Code 

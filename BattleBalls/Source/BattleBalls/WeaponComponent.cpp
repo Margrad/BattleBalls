@@ -82,7 +82,7 @@ void UWeaponComponent::AutoAimAt(FVector Target)
 	FCollisionResponseParams CollisionResponseParems = FCollisionResponseParams();
 	TArray<AActor*> IgnoredActores;
 	IgnoredActores.Add(GetOwner());
-	bool TrajectoryFound = UGameplayStatics::SuggestProjectileVelocity(
+	bool bTrajectoryFound = UGameplayStatics::SuggestProjectileVelocity(
 		this,
 		OUT OUTSugestedVelocity,
 		BarrelLocation,
@@ -96,7 +96,7 @@ void UWeaponComponent::AutoAimAt(FVector Target)
 		IgnoredActores,
 		false
 	);
-	if (TrajectoryFound)
+	if (bTrajectoryFound)
 	{
 		auto AimDirection = OUTSugestedVelocity.GetSafeNormal();
 		MoveBarrel(AimDirection);
@@ -110,7 +110,7 @@ void UWeaponComponent::AutoAimAtActor(AActor * Target)
 }
 
 
-void UWeaponComponent::Fire()
+bool UWeaponComponent::Fire()
 {
 	if(GetWorld()->TimeSeconds >= NextShotTime )
 	{
@@ -118,6 +118,8 @@ void UWeaponComponent::Fire()
 		auto Rotation = BarrelMesh->GetSocketRotation(FName("FireMouth"));
 		AActor* Projectile = GetWorld()->SpawnActor<AActor>(ProjectileBP, Location, Rotation);
 		NextShotTime = GetWorld()->TimeSeconds + ReloadTime;
+		return true;
 	}
+	return false;
 }
 

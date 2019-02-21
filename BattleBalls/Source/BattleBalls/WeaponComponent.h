@@ -36,9 +36,9 @@ public:
 	// Get BarrelMesh position to use in PlayerController->CrossAimAt
 	UStaticMeshComponent* GetBarrel() { return BarrelMesh; }
 
-
+	// return true if the gun fire sucefully
 	UFUNCTION(BlueprintCallable, Category = Fire)
-	void Fire();
+	bool Fire();
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;

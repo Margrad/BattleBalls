@@ -27,6 +27,8 @@ void ABaseAIController::Tick(float DeltaTime)
 
 float ABaseAIController::EvaluateTarget(AActor * Target)
 {
+	if (!ensure(Target)) { return 0; }
+
 	if (!Cast<AVehicleBase>(Target)->GetIsPossibleTarget())
 	{
 		return 0;
@@ -70,11 +72,6 @@ void ABaseAIController::MoveAroundTarget()
 
 	FVector NewLocation1 = FVector(-Distance.Y, Distance.X, Distance.Z).GetSafeNormal() * 1000 +TargetLocation;
 	FVector NewLocation2 = FVector(Distance.Y, -Distance.X, Distance.Z).GetSafeNormal() * 1000 +TargetLocation;
-	UE_LOG(LogTemp, Warning, TEXT("ThisPost %s"), *ThisActorLocation.ToString());
-	UE_LOG(LogTemp, Warning, TEXT("Target %s"), *TargetLocation.ToString());
-	UE_LOG(LogTemp, Warning, TEXT("Diff %s"), *Distance.ToString());
-	UE_LOG(LogTemp, Warning, TEXT("NL1 %s"), *NewLocation1.ToString());
-	UE_LOG(LogTemp, Warning, TEXT("NL2 %s"), *NewLocation2.ToString());
 
 	if (FVector::DotProduct((NewLocation1-ThisActorLocation), ThisActorRotation) > FVector::DotProduct((NewLocation2 - ThisActorLocation), ThisActorRotation)) {
 		MoveToLocation(NewLocation1, 300, false, true, true, false);
