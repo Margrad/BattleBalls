@@ -22,7 +22,6 @@ AVehicleBase::AVehicleBase()
 	// Initiate all required components
 	InitializeComponents();
 	Body->SetSimulatePhysics(true);
-	Body->SetMassOverrideInKg(NAME_None, 100, true);
 
 	AttachComponents();
 
@@ -40,19 +39,6 @@ AVehicleBase::AVehicleBase()
 	SetSpiners(CLSpiner);
 	SetSpiners(CRSpiner);
 
-	SetWheels(FLWheel);
-	SetWheels(FRWheel);
-	SetWheels(BLWheel);
-	SetWheels(BRWheel);
-	SetWheels(CLWheel);
-	SetWheels(CRWheel);
-
-	SetAxles(FLAxle);
-	SetAxles(FRAxle);
-	SetAxles(BLAxle);
-	SetAxles(BRAxle);
-	SetAxles(CLAxle);
-	SetAxles(CRAxle);
 
 	FLMask->SetCollisionProfileName(FName("OverlapAll"));
 	FRMask->SetCollisionProfileName(FName("OverlapAll"));
@@ -155,7 +141,23 @@ float AVehicleBase::GetHPRatio()
 void AVehicleBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	// The following functions were moved here to avoid a bug when packaging
+	// 
+	Body->SetMassOverrideInKg(NAME_None, 100, true);
+	SetWheels(FLWheel);
+	SetWheels(FRWheel);
+	SetWheels(BLWheel);
+	SetWheels(BRWheel);
+	SetWheels(CLWheel);
+	SetWheels(CRWheel);
+
+	SetAxles(FLAxle);
+	SetAxles(FRAxle);
+	SetAxles(BLAxle);
+	SetAxles(BRAxle);
+	SetAxles(CLAxle);
+	SetAxles(CRAxle);
 }
 
 void AVehicleBase::SetCamera()
