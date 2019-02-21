@@ -42,23 +42,18 @@ float ABaseAIController::EvaluateTarget(AActor * Target)
 AActor* ABaseAIController::SelectTargetFromArray(TArray<AActor*> FoundEnemies)
 {
 	if (FoundEnemies.Num() == 0) { return nullptr; }
-	TArray<float> Evaluations;
-	for (auto Enemy : FoundEnemies) {
-		Evaluations.Add(EvaluateTarget(Enemy));
-	}
-	int32 MaxIndex = 0;
-	int32 i = 0;
-	float Max = 0;
-	for (auto Evaluation : Evaluations) {
-		if (Evaluation > Max) {
-			Max = Evaluation;
-			MaxIndex = i;
-		}
-		i++;
-	}
-	if (Max <= 0) { return nullptr; }
+	float Evaluation;
+	float MaxEvaluation=0;
+	AActor* Target = nullptr;
 
-	return FoundEnemies[MaxIndex];
+	for (auto Enemy : FoundEnemies) {
+		Evaluation=EvaluateTarget(Enemy);
+		if (Evaluation>MaxEvaluation) {
+			MaxEvaluation = Evaluation;
+			Target = Enemy;
+		}
+	}
+	return Target;
 }
 
 void ABaseAIController::MoveAroundTarget()
@@ -67,15 +62,23 @@ void ABaseAIController::MoveAroundTarget()
 		UE_LOG(LogTemp, Warning, TEXT("Ups..."));
 		return; 
 	}
-	
-	FVector TargetLocation = Cast<AActor>(Blackboard->GetValueAsObject("Enemy"))->GetActorLocation();
-	FVector Distance = TargetLocation - GetPawn()->GetActorLocation();
-	//FVector NewLocation1 = FVector(-Distance.Y, Distance.X, Distance.Z)+TargetLocation;
-	FVector NewLocation2 = FVector(Distance.Y, -Distance.X, Distance.Z).GetSafeNormal() * 1000 +TargetLocation;
 
-	//if (NewLocation1.Size() < NewLocation2.Size()) {
-	//	MoveToLocation(NewLocation1.GetSafeNormal()*500, 100, false);
-	//	return ;
-	//}
-	MoveToLocation(NewLocation2, 100, false, true, true, false);
+	FVector ThisActorRotation = GetPawn()->GetActorRotation().Vector();
+	FVector ThisActorLocation = GetPawn()->GetActorLocation();
+	FVector TargetLocation = Cast<AActor>(Blackboard->GetValueAsObject("Enemy"))->GetActorLocation();
+	FVector Distance = TargetLocation - ThisActorLocation;
+
+	FVector NewLocation1 = FVector(-Distance.Y, Distance.X, Distance.Z).GetSafeNormal() * 1000 +TargetLocation;
+	FVector NewLocation2 = FVector(Distance.Y, -Distance.X, Distance.Z).GetSafeNormal() * 1000 +TargetLocation;
+	UE_LOG(LogTemp, Warning, TEXT("ThisPost %s"), *ThisActorLocation.ToString());
+	UE_LOG(LogTemp, Warning, TEXT("Target %s"), *TargetLocation.ToString());
+	UE_LOG(LogTemp, Warning, TEXT("Diff %s"), *Distance.ToString());
+	UE_LOG(LogTemp, Warning, TEXT("NL1 %s"), *NewLocation1.ToString());
+	UE_LOG(LogTemp, Warning, TEXT("NL2 %s"), *NewLocation2.ToString());
+
+	if (FVector::DotProduct((NewLocation1-ThisActorLocation), ThisActorRotation) > FVector::DotProduct((NewLocation2 - ThisActorLocation), ThisActorRotation)) {
+		MoveToLocation(NewLocation1, 300, false, true, true, false);
+		return ;
+	}
+	MoveToLocation(NewLocation2, 300, false, true, true, false);
 }
