@@ -2,3 +2,7 @@
 
 #include "BattleBallsGameModeBase.h"
 
+void ABattleBallsGameModeBase::SetGameDificulty(EDificultyEnum Dificulty)
+{
+	GameDificulty = Dificulty;
+}

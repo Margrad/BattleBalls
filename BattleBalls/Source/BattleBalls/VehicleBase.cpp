@@ -11,7 +11,7 @@
 #include "WeaponComponent.h"
 #include "BaseAIController.h"
 #include "BasePlayerController.h"
-
+#include "BattleBallsGameModeBase.h"
 
 // Sets default values
 AVehicleBase::AVehicleBase()
@@ -135,6 +135,34 @@ float AVehicleBase::GetCurrentHP()
 float AVehicleBase::GetHPRatio()
 {
 	return CurrentHP/MaxHP;
+}
+FVector AVehicleBase::GetAimBias()
+{
+	return AimDificultyBias;
+}
+
+void AVehicleBase::SetAimBias()
+{
+	float RBias;
+	switch (Cast<ABattleBallsGameModeBase>(GetWorld()->GetAuthGameMode())->GetGameDificulty())
+	{
+		case (EDificultyEnum::DE_Easy): {
+			RBias = 0.100;
+			break;
+		}
+		case (EDificultyEnum::DE_Normal): {
+			RBias = 0.050;
+			break;
+		}
+		case (EDificultyEnum::DE_Hard): {
+			RBias = 0.010;
+			break;
+		}
+		default:{
+			break; 
+		}
+	}
+	AimDificultyBias = FMath::VRand()*RBias;
 }
 
 // Called when the game starts or when spawned

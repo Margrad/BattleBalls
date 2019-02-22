@@ -44,7 +44,7 @@ private:
 	// Movement Settings 
 	// Max Throttle for each wheel
 	UPROPERTY(EditDefaultsOnly, Category = Movement)
-	float BaseThrottle = 70000;
+	float BaseThrottle = 90000;
 	// Max Speed, as the speed increases the throttle on the wheels is decreased
 	UPROPERTY(EditDefaultsOnly, Category = Movement)
 	float MaxSpeed = 700;

@@ -141,6 +141,11 @@ public:
 	float GetCurrentHP();
 	UFUNCTION(BlueprintPure, Category = HP)
 	float GetHPRatio();
+	
+	UFUNCTION(BlueprintCallable, Category = Fire)
+	FVector GetAimBias();
+	UFUNCTION(BlueprintCallable, Category = Fire)
+	void SetAimBias();
 
 	UFUNCTION(BlueprintPure, Category = AsTarget)
 	bool GetIsPossibleTarget() { return IsPossibleTarget; }
@@ -162,6 +167,8 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = Team)
 	FName Team = FName("Neutral");
+
+	FVector AimDificultyBias = FVector(0, 0, 0);
 
 	void SetWheels(USphereComponent* Wheel);
 	void SetAxles(USphereComponent * Axle);

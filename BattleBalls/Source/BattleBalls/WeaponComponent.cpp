@@ -4,6 +4,8 @@
 #include "Engine/World.h"
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "VehicleBase.h"
+
 // Sets default values for this component's properties
 UWeaponComponent::UWeaponComponent()
 {
@@ -98,7 +100,7 @@ void UWeaponComponent::AutoAimAt(FVector Target)
 	);
 	if (bTrajectoryFound)
 	{
-		auto AimDirection = OUTSugestedVelocity.GetSafeNormal();
+		auto AimDirection = OUTSugestedVelocity.GetSafeNormal()+Cast<AVehicleBase>(GetOwner())->GetAimBias();
 		MoveBarrel(AimDirection);
 	}
 }
