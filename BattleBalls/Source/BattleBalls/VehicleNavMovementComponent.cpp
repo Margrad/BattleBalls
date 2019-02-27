@@ -9,13 +9,36 @@ void UVehicleNavMovementComponent::RequestDirectMove(const FVector & MoveVelocit
 	FVector DirectionToGo = MoveVelocity.GetSafeNormal();
 	FVector DirectionFacing = GetOwner()->GetActorForwardVector().GetSafeNormal();
 
-	float Throttle = FVector::DotProduct(DirectionToGo, DirectionFacing);
-	IntendMoveForward(Throttle);
+	float DotProd = FVector::DotProduct(DirectionToGo, DirectionFacing);
+	float CrossProd = FVector::CrossProduct(DirectionFacing, DirectionToGo).Z;
 
-	Throttle = FVector::CrossProduct(DirectionFacing, DirectionToGo).Z;
-	IntendTurnRight(Throttle);
+	// Simple way to move forward
+	IntendMoveForward(DotProd);
+
+	// Complex way to turn, turns faster  when the move to location is behind the pawn
+	//          ^
+	//   ------1|---..
+	//          |      \
+	//          |       .
+	// ---------|-------|------>
+	//  -1      |       1
+	//          |      /
+	//   ---- -1|---''
+
+	if (DotProd < 0)
+	{
+		if (CrossProd > 0)
+		{
+			IntendTurnRight(1);
+		}
+		else {
+			IntendTurnRight(-1);
+		}
+	}
+	else {
+		IntendTurnRight(CrossProd);
+	}
 }
-
 
 void UVehicleNavMovementComponent::IntendMoveForward(float ThrottleIn)
 {

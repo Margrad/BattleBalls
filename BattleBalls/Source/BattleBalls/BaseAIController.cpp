@@ -49,10 +49,12 @@ AActor* ABaseAIController::SelectTargetFromArray(TArray<AActor*> FoundEnemies)
 	AActor* Target = nullptr;
 
 	for (auto Enemy : FoundEnemies) {
-		Evaluation=EvaluateTarget(Enemy);
+		AVehicleBase* Pawn = Cast<AVehicleBase>(Enemy);
+		if (!ensure(Pawn)) { continue; }
+		Evaluation=EvaluateTarget(Pawn);
 		if (Evaluation>MaxEvaluation) {
 			MaxEvaluation = Evaluation;
-			Target = Enemy;
+			Target = Pawn;
 		}
 	}
 	return Target;

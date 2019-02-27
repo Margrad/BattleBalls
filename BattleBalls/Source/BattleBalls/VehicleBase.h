@@ -150,6 +150,14 @@ public:
 	UFUNCTION(BlueprintPure, Category = AsTarget)
 	bool GetIsPossibleTarget() { return IsPossibleTarget; }
 
+	UFUNCTION(BlueprintCallable, Category = AsTarget)
+	void SetIsPossibleTarget(bool Targetable) {IsPossibleTarget = Targetable; }
+	
+	// Should be called at every tick
+	// and returns if the run should make noise
+	UFUNCTION(BlueprintCallable, Category = Audio)
+	bool ShouldMakeEngineSound(float DeltaTime);
+
 
 protected:
 	// Called when the game starts or when spawned
@@ -164,6 +172,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = HP)
 		float CurrentHP = 0;
 
+	float EngineRunDistance = 0;
 
 	UPROPERTY(EditDefaultsOnly, Category = Team)
 	FName Team = FName("Neutral");

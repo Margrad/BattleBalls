@@ -155,7 +155,7 @@ void AVehicleBase::SetAimBias()
 			break;
 		}
 		case (EDificultyEnum::DE_Hard): {
-			RBias = 0.010;
+			RBias = 0.005;
 			break;
 		}
 		default:{
@@ -163,6 +163,25 @@ void AVehicleBase::SetAimBias()
 		}
 	}
 	AimDificultyBias = FMath::VRand()*RBias;
+}
+
+bool AVehicleBase::ShouldMakeEngineSound(float DeltaTime)
+{
+	if (!IsPossibleTarget) { return false; }
+	float EngineSpeed = GetVelocity().Size();
+	
+	if (EngineSpeed < 50) { EngineSpeed = 50; } // Set this to keep the engine with a minimal frequency
+	
+	// Check is aceleration is being used
+	EngineSpeed += FMath::Abs(GetInputAxisValue(FName("MoveForward"))) * 10;
+	
+	// If the engine "rotated" enough it will reset and produce an audio
+	EngineRunDistance += EngineSpeed * DeltaTime;
+	if (EngineRunDistance >= 50) {
+		EngineRunDistance = 0;
+		return true;
+	}
+	return false;
 }
 
 // Called when the game starts or when spawned
@@ -186,6 +205,7 @@ void AVehicleBase::BeginPlay()
 	SetAxles(BRAxle);
 	SetAxles(CLAxle);
 	SetAxles(CRAxle);
+	
 }
 
 void AVehicleBase::SetCamera()

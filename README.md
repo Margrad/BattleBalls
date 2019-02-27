@@ -4,6 +4,6 @@ This is a pet project of a game made with Unreal Engine and C++. The objective o
 
 
 Current Point in the development cycle:
--> Add Function <- Added Difficulty, Main Menu and Options
--> Make it work 
+-> Add Function 
+-> Make it work <- AI movement improvement
 -> Clean Code 
